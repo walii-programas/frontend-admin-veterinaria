@@ -1,1 +1,54 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --primary-color: #C70039;
+  --secondary-color: #581845;
+  --third-color: #2A2A2A;
+  --bg-primary: #FCFCFC;
+  --bg-secondary: #2A2A2A;
+  --text-primary: #2A2A2A;
+  --text-secondary: #FCFCFC;
+}
+
+*, *:before, *:after {
+  font-family: 'Quicksand', sans-serif;
+}
+
+$theme-colors: (
+  "primary": #581845,
+  "secondary": #C70039
+);
+  
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--primary-color);
+}
+
+h3 span {
+  color: var(--secondary-color);
+}
+
+input, textarea {
+  margin-bottom: 1rem;
+}
+
+button {
+  margin-right: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+body::-webkit-scrollbar {
+  width: 0.75rem;
+}
+
+body::-webkit-scrollbar-track {
+  background: var(--secondary-color);
+}
+
+body::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 0.75rem;
+}

@@ -6,6 +6,7 @@ export interface Vet {
   address: string;
   email: string;
   password: string;
+  state: string;
   cmvp: string;
 }
 

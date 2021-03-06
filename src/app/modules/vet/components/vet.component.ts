@@ -1,111 +1,20 @@
 import { Component, OnInit, PipeTransform } from '@angular/core';
-import { DecimalPipe } from '@angular/common';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { Router } from "@angular/router";
 import { VetService } from "../service/vet.service";
-import { VetListAll } from '../interfaces/vet.interface';
+import { Vet, VetListAll } from '../interfaces/vet.interface';
 
-// 
-  interface VetForTable {
-    fullname: "",
-    dni: "",
-    petsQuantity: ""
-  }
-// 
+// function search(text: string, pipe: PipeTransform): Country[] {
+//   return COUNTRIES.filter(country => {
+//     const term = text.toLowerCase();
+//     return country.name.toLowerCase().includes(term)
+//         || pipe.transform(country.area).includes(term)
+//         || pipe.transform(country.population).includes(term);
+//   });
+// }
 
-// -----------------------------------------------
-interface Country {
-  name: string;
-  flag: string;
-  area: number;
-  population: number;
-}
-
-const COUNTRIES: Country[] = [
-  {
-    name: 'Russia',
-    flag: 'f/f3/Flag_of_Russia.svg',
-    area: 17075200,
-    population: 146989754
-  },
-  {
-    name: 'Canada',
-    flag: 'c/cf/Flag_of_Canada.svg',
-    area: 9976140,
-    population: 36624199
-  },
-  {
-    name: 'United States',
-    flag: 'a/a4/Flag_of_the_United_States.svg',
-    area: 9629091,
-    population: 324459463
-  },
-  {
-    name: 'China',
-    flag: 'f/fa/Flag_of_the_People%27s_Republic_of_China.svg',
-    area: 9596960,
-    population: 1409517397
-  },
-  {
-    name: 'Russia',
-    flag: 'f/f3/Flag_of_Russia.svg',
-    area: 17075200,
-    population: 146989754
-  },
-  {
-    name: 'Canada',
-    flag: 'c/cf/Flag_of_Canada.svg',
-    area: 9976140,
-    population: 36624199
-  },
-  {
-    name: 'United States',
-    flag: 'a/a4/Flag_of_the_United_States.svg',
-    area: 9629091,
-    population: 324459463
-  },
-  {
-    name: 'China',
-    flag: 'f/fa/Flag_of_the_People%27s_Republic_of_China.svg',
-    area: 9596960,
-    population: 1409517397
-  },
-  {
-    name: 'Russia',
-    flag: 'f/f3/Flag_of_Russia.svg',
-    area: 17075200,
-    population: 146989754
-  },
-  {
-    name: 'Canada',
-    flag: 'c/cf/Flag_of_Canada.svg',
-    area: 9976140,
-    population: 36624199
-  },
-  {
-    name: 'United States',
-    flag: 'a/a4/Flag_of_the_United_States.svg',
-    area: 9629091,
-    population: 324459463
-  },
-  {
-    name: 'China',
-    flag: 'f/fa/Flag_of_the_People%27s_Republic_of_China.svg',
-    area: 9596960,
-    population: 1409517397
-  }
-];
-
-function search(text: string, pipe: PipeTransform): Country[] {
-  return COUNTRIES.filter(country => {
-    const term = text.toLowerCase();
-    return country.name.toLowerCase().includes(term)
-        || pipe.transform(country.area).includes(term)
-        || pipe.transform(country.population).includes(term);
-  });
-}
 // ----------------------------------------------
 
 @Component({
@@ -117,22 +26,59 @@ export class VetComponent implements OnInit {
 
   // variables
   vetFormReg!: FormGroup;
-  vetsAll: VetListAll[] = [];
 
   constructor(
-    pipe: DecimalPipe,
     private router: Router,
     private formBuilder: FormBuilder,
     private vetService: VetService
-  ) {
-    this.countries$ = this.filter.valueChanges.pipe(
-      startWith(''),
-      map(text => search(text, pipe))
-    );
-  }
+  ) { }
 
   ngOnInit(): void {
     // init form vet register
+    this.initFormVetRegister();
+
+    // get vets list
+    this.vetGetListAll();
+  }
+
+  // filter vets
+  vets$: Observable<Vet[]>;
+  filter = new FormControl('');
+  vets: Vet[] = [];
+  
+  search(text: string): Vet[] {
+    return this.vets.filter(vet => {
+      const term = text.toLowerCase();
+      return vet.firstname.toLowerCase().includes(term)
+      || vet.lastname.toLowerCase().includes(term)
+      || vet.dni.includes(term)
+      || vet.phone.includes(term)
+      || vet.cmvp.includes(term)
+    });
+  }
+  // -----------------
+  
+  // switch page
+  switchListVet = true;
+  switchRegVet = false;
+
+  spinnerStatus = false;
+
+  /* UI methods */
+
+  switchPageReg() {
+    this.switchListVet = false;
+    this.switchRegVet = true;
+    this.initFormVetRegister();
+  }
+
+  switchPageList() {
+    this.switchListVet = true;
+    this.switchRegVet = false;
+    this.initFormVetRegister();
+  }
+
+  initFormVetRegister() {
     this.vetFormReg = this.formBuilder.group({
       'firstname': ['',[Validators.required, Validators.minLength(3)]],
       'lastname': ['',[Validators.required, Validators.minLength(3)]],
@@ -145,36 +91,18 @@ export class VetComponent implements OnInit {
     });
   }
 
-  // ---------------
-  countries$: Observable<Country[]>;
-  filter = new FormControl('');
-  // -----------------
-
-  // switch page
-  switchListVet = true;
-  switchRegVet = false;
-
-  spinnerStatus = false;
-
-  // UI methods--
-
-  switchPageReg() {
-    this.switchListVet = false;
-    this.switchRegVet = true;
-  }
-
-  switchPageList() {
-    this.switchListVet = true;
-    this.switchRegVet = false;
-  }
-
-  // api methods--
+  /* API methods */
 
   // get vet list
   vetGetListAll() {
     this.spinnerStatus = true;
     this.vetService.vetGetListAll().subscribe((res) => {
-      console.log(res);
+      // console.log(res);
+      this.vets = res['data'];
+      this.vets$ = this.filter.valueChanges.pipe(
+        startWith(''),
+        map(text => this.search(text))
+      );
       this.spinnerStatus = false;
     }, (err) => {
       console.log(err);
@@ -183,9 +111,13 @@ export class VetComponent implements OnInit {
   }
 
   // register new vet
-  vetRegister(dataVet: any) {
+  vetRegister(dataVet: Vet) {
+    console.log(dataVet)
     this.vetService.vetRegister(dataVet).subscribe((res) => {
-      console.log(res);
+      // console.log(res);
+      this.switchPageList();
+      this.vetGetListAll();
+      this.initFormVetRegister();
     }, (err) => {
       console.log(err);
     });

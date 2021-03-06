@@ -9,6 +9,9 @@ export class GlobalAuthService {
   
   constructor() {}
 
+  // public variables
+  public urlApiAdmin = 'http://localhost:8000/api';
+
   // public metods
   public getFormUrlEncoded(toConvert:any) {
     const formBody = [];
@@ -23,7 +26,7 @@ export class GlobalAuthService {
   public getHeaders() {
     return new HttpHeaders({
       'Authorization': 'Bearer' + localStorage.getItem('token'),
-      'ContentType': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded'
     });
   }
 

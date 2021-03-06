@@ -14,7 +14,7 @@
 
   <div class="container" *ngIf="switchRegVet">
     <h3>Registrar Nuevo Veterinario</h3>
-    <form class="vet__formReg" [formGroup]="vetFormReg">
+    <form class="vet__formReg" [formGroup]="vetFormReg" (ngSubmit)="vetRegister(vetFormReg.value)">
       <div class="form-row">
         <div class="col">
           <input formControlName="firstname" type="text" class="form-control" placeholder="Nombres">
@@ -50,6 +50,12 @@
     <button class="btn btn-secondary" (click)="switchPageList()">Cancelar</button>
   </div>
 
+  <div class="container vet__spinner">
+    <div class="spinner-border text-primary" role="status" *ngIf="spinnerStatus">
+      <span class="sr-only">Cargando...</span>
+    </div>
+  </div>
+  
   <div class="container" [hidden]="!switchListVet">
 
     <form class="vet__formSearch">
@@ -70,20 +76,20 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let country of countries$ | async; index as i">
+      <tr *ngFor="let vet of vets$ | async; index as i">
         <th scope="row">{{ i + 1 }}</th>
         <td>
-          <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" class="mr-2" style="width: 20px">
-          <ngb-highlight [result]="country.name" [term]="filter.value"></ngb-highlight>
+          <!-- <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" class="mr-2" style="width: 20px"> -->
+          <ngb-highlight [result]="vet.firstname + ' ' + vet.lastname" [term]="filter.value"></ngb-highlight>
         </td>
         <td>
-          <ngb-highlight [result]="country.area | number" [term]="filter.value"></ngb-highlight>
+          <ngb-highlight [result]="vet.dni" [term]="filter.value"></ngb-highlight>
         </td>
         <td>
-          <ngb-highlight [result]="country.population | number" [term]="filter.value"></ngb-highlight>
+          <ngb-highlight [result]="vet.phone" [term]="filter.value"></ngb-highlight>
         </td>
         <td>
-          <ngb-highlight [result]="country.population | number" [term]="filter.value"></ngb-highlight>
+          <ngb-highlight [result]="vet.cmvp" [term]="filter.value"></ngb-highlight>
         </td>
         <td>
           <button class="btn btn-primary">Editar datos</button>
@@ -92,9 +98,7 @@
       </tbody>
     </table>
 
-    <div class="spinner-border" role="status" *ngIf="spinnerStatus">
-      <span class="sr-only">Cargando...</span>
-    </div>
+    
 
   </div>
 

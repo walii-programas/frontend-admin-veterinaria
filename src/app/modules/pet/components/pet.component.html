@@ -1,6 +1,7 @@
 <div class="pet">
 
-  <div class="container">
+  <!-- PET -->
+  <div class="petContainer container">
 
     <!-- menu -->
 
@@ -9,15 +10,20 @@
       <div class="row">
         <h2>Mascotas</h2>
       </div>
+
+      <div class="spinner-border" role="status" *ngIf="spinnerStatusClient">
+        <span class="sr-only">Cargando...</span>
+      </div>
   
-      <div class="row">
+      <div class="row" *ngFor="let clt of client">
         <div class="col">
-          <h3>Mascotas de Cliente: <span> {{ idUser }} </span> </h3>
+          <h3>Mascotas de Cliente: <span> {{ clt.firstname }} {{ clt.lastname }}  </span> </h3>
         </div>
       </div>
   
       <div class="row">
         <div class="col">
+          <button class="btn btn-primary" (click)="switchPetList()">Lista de Mascotas</button>
           <button class="btn btn-primary" (click)="switchPetReg()">Registrar nueva Mascota</button>
           <button class="btn btn-secondary" routerLink="/home/clientes">Volver a Clientes</button>
         </div>
@@ -25,11 +31,15 @@
 
     </div>
 
+    <div class="spinner-border" role="status" *ngIf="spinnerStatus">
+      <span class="sr-only">Cargando...</span>
+    </div>
+
     <!-- register new pet -->
 
     <div class="container" *ngIf="switchRegpet">
       <h3>Registrar Nueva Mascota</h3>
-      <form class="pet__formReg" [formGroup]="petFormReg">
+      <form class="pet__formReg" [formGroup]="petFormReg" (ngSubmit)="petRegister(petFormReg.value)">
         <div class="form-row">
           <div class="col">
             <input formControlName="name" type="text" class="form-control" placeholder="Nombres">
@@ -38,23 +48,35 @@
             <input formControlName="species" type="text" class="form-control" placeholder="Especie">
           </div>
           <div class="col">
-            <input formControlName="breed" type="number" class="form-control" placeholder="Raza">
+            <input formControlName="breed" type="text" class="form-control" placeholder="Raza">
           </div>
         </div>
         <div class="form-row">
           <div class="col">
-            <input formControlName="color" type="number" class="form-control" placeholder="Color">
+            <input formControlName="color" type="text" class="form-control" placeholder="Color">
           </div>
-          <div class="col-8">
-            <input formControlName="birthdate" type="text" class="form-control" placeholder="Fecha de Nacimiento">
-          </div>
-        </div>
-        <div class="form-row">
           <div class="col">
-            <input formControlName="sex" type="text" class="form-control" placeholder="Sexo">
+            <input formControlName="birthdate" type="date" class="form-control" placeholder="Fecha de Nacimiento">
+          </div>
+          <div class="col">
+            <select formControlName="sex" class="form-control">
+              <option value="Macho">Macho</option>
+              <option value="Hembra">Hembra</option>
+            </select>
           </div>
           <!-- <div class="col">
-            <input formControlName="password" type="password" class="form-control" placeholder="Contraseña">
+            <div class="form-check">
+              <input formControlName="sex" class="form-check-input" type="radio" name="sexRadioButton" id="exampleRadios1" value="option1">
+              <label class="form-check-label" for="exampleRadios1">
+                Macho
+              </label>
+            </div>
+            <div class="form-check">
+              <input formControlName="sex" class="form-check-input" type="radio" name="sexRadioButton" id="exampleRadios2" value="option2">
+              <label class="form-check-label" for="exampleRadios2">
+                Hembra
+              </label>
+            </div>
           </div> -->
         </div>
         <button type="submit" class="btn btn-primary" [disabled]="petFormReg.invalid">Registrar Nueva Mascota</button>
@@ -68,19 +90,22 @@
       <div class="col">
         <ngb-accordion [closeOthers]="true" activeIds="static-1">
 
-          <ngb-panel id="static-1">
+          <ngb-panel id="static-{{pet.id}}" *ngFor="let pet of pets; index as i">
 
             <ng-template ngbPanelTitle>
-              <span>&#9733; <b>Mascota</b> {{ idUser }} &#9733;</span>
+              <h3><span>&#9733; <b>{{pet.name}}</b> </span></h3>
             </ng-template>
 
             <ng-template ngbPanelContent>
 
               <div class="row">
 
-                <div class="col-8">
+                <div class="col-7">
+
                   <h3>Datos Generales</h3>
+
                   <div class="form-group row">
+
                     <div class="col-4">
                       <label class="col col-form-label">Nombres:</label>
                       <label class="col col-form-label">Especie:</label>
@@ -89,96 +114,37 @@
                       <label class="col col-form-label">Sexo:</label>
                       <label class="col col-form-label">Fecha de Nacimiento:</label>
                     </div>
+
                     <div class="col">
-                      <label class="col col-form-label">Nombreasdf</label>
-                      <label class="col col-form-label">Eadsfadsf</label>
-                      <label class="col col-form-label">asdfasdf</label>
-                      <label class="col col-form-label">adsfasdf</label>
-                      <label class="col col-form-label">asdfasdf</label>
-                      <label class="col col-form-label">adsfasdfdsf</label>
+                      <label class="col col-form-label">{{ pet.name }}</label>
+                      <label class="col col-form-label">{{ pet.species }}</label>
+                      <label class="col col-form-label">{{ pet.breed }}</label>
+                      <label class="col col-form-label">{{ pet.color }}</label>
+                      <label class="col col-form-label">{{ pet.sex }}</label>
+                      <label class="col col-form-label">{{ pet.birthdate }}</label>
                     </div>
+
                   </div>
+
                 </div>
 
                 <div class="col">
                   <h3>Acciones</h3>
+
                   <div class="form-group row">
                     <div class="col">
-                      <button class="btn btn-primary">Ver Historial Clínico</button>
+                      <button class="btn btn-primary" (click)="goToPetClinicalHistory(pet.id)">Crear o Ver el Historial Clínico</button>
                     </div>
+
                     <div class="col">
-                      <button class="btn btn-primary">Ver Tarjeta de Vacunas</button>
+                      <button class="btn btn-primary" (click)="goToPetVaccinationCards(pet.id)">Crear o Ver Tarjetas de Vacunas</button>
                     </div>
                   </div>
+
                 </div>
 
               </div>
 
-            </ng-template>
-          </ngb-panel>
-
-          <ngb-panel id="static-2">
-
-            <ng-template ngbPanelTitle>
-              <span>&#9733; <b>Mascota</b> 2 &#9733;</span>
-            </ng-template>
-
-            <ng-template ngbPanelContent>
-
-              <div class="row">
-
-                <div class="col-8">
-                  <h3>Datos Generales</h3>
-                  <div class="form-group row">
-                    <div class="col-4">
-                      <label class="col col-form-label">Nombres:</label>
-                      <label class="col col-form-label">Especie:</label>
-                      <label class="col col-form-label">Raza:</label>
-                      <label class="col col-form-label">Color:</label>
-                      <label class="col col-form-label">Sexo:</label>
-                      <label class="col col-form-label">Fecha de Nacimiento:</label>
-                    </div>
-                    <div class="col">
-                      <label class="col col-form-label">Nombreasdf</label>
-                      <label class="col col-form-label">Eadsfadsf</label>
-                      <label class="col col-form-label">asdfasdf</label>
-                      <label class="col col-form-label">adsfasdf</label>
-                      <label class="col col-form-label">asdfasdf</label>
-                      <label class="col col-form-label">adsfasdfdsf</label>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col">
-                  <h3>Acciones</h3>
-                  <div class="form-group row">
-                    <div class="col">
-                      <button class="btn btn-primary">Ver Historial Clínico</button>
-                    </div>
-                    <div class="col">
-                      <button class="btn btn-primary">Ver Tarjeta de Vacunas</button>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-
-            </ng-template>
-          </ngb-panel>
-
-          <ngb-panel id="static-3" title="Disabled" [disabled]="true">
-            <ng-template ngbPanelContent>
-              Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf
-              moon officia
-              aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf
-              moon tempor,
-              sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh
-              helvetica,
-              craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo.
-              Leggings
-              occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them
-              accusamus
-              labore sustainable VHS.
             </ng-template>
           </ngb-panel>
 
@@ -187,5 +153,10 @@
     </div>
 
   </div>
+
+  <!-- CLINICAL HISTORY -->
+  <!-- <div class="pet-clinical-historyContainer container">
+    <router-outlet></router-outlet>
+  </div> -->
 
 </div>

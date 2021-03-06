@@ -1,112 +1,10 @@
 import { Component, OnInit, PipeTransform } from '@angular/core';
-import { DecimalPipe } from '@angular/common';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { Router } from "@angular/router";
 import { ClientService } from "../service/client.service";
-import { ClientListAll } from '../interfaces/client.interface';
-
-// 
-  interface ClientForTable {
-    fullname: "",
-    dni: "",
-    petsQuantity: ""
-  }
-// 
-
-// -----------------------------------------------
-interface Country {
-  name: string;
-  flag: string;
-  area: number;
-  population: number;
-}
-
-const COUNTRIES: Country[] = [
-  {
-    name: 'Russia',
-    flag: 'f/f3/Flag_of_Russia.svg',
-    area: 17075200,
-    population: 146989754
-  },
-  {
-    name: 'Canada',
-    flag: 'c/cf/Flag_of_Canada.svg',
-    area: 9976140,
-    population: 36624199
-  },
-  {
-    name: 'United States',
-    flag: 'a/a4/Flag_of_the_United_States.svg',
-    area: 9629091,
-    population: 324459463
-  },
-  {
-    name: 'China',
-    flag: 'f/fa/Flag_of_the_People%27s_Republic_of_China.svg',
-    area: 9596960,
-    population: 1409517397
-  },
-  {
-    name: 'Russia',
-    flag: 'f/f3/Flag_of_Russia.svg',
-    area: 17075200,
-    population: 146989754
-  },
-  {
-    name: 'Canada',
-    flag: 'c/cf/Flag_of_Canada.svg',
-    area: 9976140,
-    population: 36624199
-  },
-  {
-    name: 'United States',
-    flag: 'a/a4/Flag_of_the_United_States.svg',
-    area: 9629091,
-    population: 324459463
-  },
-  {
-    name: 'China',
-    flag: 'f/fa/Flag_of_the_People%27s_Republic_of_China.svg',
-    area: 9596960,
-    population: 1409517397
-  },
-  {
-    name: 'Russia',
-    flag: 'f/f3/Flag_of_Russia.svg',
-    area: 17075200,
-    population: 146989754
-  },
-  {
-    name: 'Canada',
-    flag: 'c/cf/Flag_of_Canada.svg',
-    area: 9976140,
-    population: 36624199
-  },
-  {
-    name: 'United States',
-    flag: 'a/a4/Flag_of_the_United_States.svg',
-    area: 9629091,
-    population: 324459463
-  },
-  {
-    name: 'China',
-    flag: 'f/fa/Flag_of_the_People%27s_Republic_of_China.svg',
-    area: 9596960,
-    population: 1409517397
-  }
-];
-
-function search(text: string, pipe: PipeTransform): Country[] {
-  return COUNTRIES.filter(country => {
-    const term = text.toLowerCase();
-    return country.name.toLowerCase().includes(term)
-        || pipe.transform(country.area).includes(term)
-        || pipe.transform(country.population).includes(term);
-  });
-}
-// ----------------------------------------------
+import { Client } from '../interfaces/client.interface';
 
 @Component({
   selector: 'app-client',
@@ -115,24 +13,61 @@ function search(text: string, pipe: PipeTransform): Country[] {
 })
 export class ClientComponent implements OnInit {
 
-  // variables
+  // vars
   clientFormReg!: FormGroup;
-  vetsAll: ClientListAll[] = [];
 
   constructor(
-    pipe: DecimalPipe,
     private router: Router,
     private formBuilder: FormBuilder,
     private clientService: ClientService
-  ) {
-    this.countries$ = this.filter.valueChanges.pipe(
-      startWith(''),
-      map(text => search(text, pipe))
-    );
-  }
+  ) { }
 
   ngOnInit(): void {
     // init form vet register
+    this.initFormClientRegister();
+
+    // get clients list all
+    this.clientGetListAll();
+  }
+
+  /* filter vets */
+  clients$: Observable<Client[]>;
+  filter = new FormControl('');
+  clients: Client[] = [];
+  
+  search(text: string): Client[] {
+    return this.clients.filter(client => {
+      const term = text.toLowerCase();
+      return client.firstname.toLowerCase().includes(term)
+        || client.lastname.toLowerCase().includes(term)
+        || client.dni.includes(term)
+        || client.phone.includes(term)
+        || client.address.includes(term)
+    });
+  }
+  /* -- */
+
+  // switch page
+  switchListclient = true;
+  switchRegclient = false;
+
+  spinnerStatus = false;
+
+  /* UI methods */
+
+  switchPageReg() {
+    this.switchListclient = false;
+    this.switchRegclient = true;
+    this.initFormClientRegister();
+  }
+
+  switchPageList() {
+    this.switchListclient = true;
+    this.switchRegclient = false;
+    this.initFormClientRegister();
+  }
+
+  initFormClientRegister() {
     this.clientFormReg = this.formBuilder.group({
       'firstname': ['',[Validators.required, Validators.minLength(3)]],
       'lastname': ['',[Validators.required, Validators.minLength(3)]],
@@ -144,36 +79,18 @@ export class ClientComponent implements OnInit {
     });
   }
 
-  // ---------------
-  countries$: Observable<Country[]>;
-  filter = new FormControl('');
-  // -----------------
-
-  // switch page
-  switchListclient = true;
-  switchRegclient = false;
-
-  spinnerStatus = false;
-
-  // UI methods--
-
-  switchPageReg() {
-    this.switchListclient = false;
-    this.switchRegclient = true;
-  }
-
-  switchPageList() {
-    this.switchListclient = true;
-    this.switchRegclient = false;
-  }
-
-  // api methods--
+  /* API methods */
 
   // get client list
   clientGetListAll() {
     this.spinnerStatus = true;
     this.clientService.clientGetListAll().subscribe((res) => {
-      console.log(res);
+      // console.log(res);
+      this.clients = res['data'];
+      this.clients$ = this.filter.valueChanges.pipe(
+        startWith(''),
+        map(text => this.search(text))
+      );
       this.spinnerStatus = false;
     }, (err) => {
       console.log(err);
@@ -182,9 +99,12 @@ export class ClientComponent implements OnInit {
   }
 
   // register new client
-  clientRegister(dataclient: any) {
+  clientRegister(dataclient: Client) {
     this.clientService.clientRegister(dataclient).subscribe((res) => {
-      console.log(res);
+      // console.log(res);
+      this.switchPageList();
+      this.clientGetListAll();
+      this.initFormClientRegister();
     }, (err) => {
       console.log(err);
     });

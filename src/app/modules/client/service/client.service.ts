@@ -10,7 +10,7 @@ import { GlobalAuthService } from "../../../global/services/globalAuth.service";
 export class ClientService {
 
   // variables
-  private urlApiAdmin = ''; 
+  private urlApiAdmin = this.gAuthServ.urlApiAdmin; 
   
   constructor(
     private http: HttpClient,
@@ -21,6 +21,13 @@ export class ClientService {
   public clientGetListAll() {
     return this.http.get(
       this.urlApiAdmin + '/admin/clients',
+      {headers: this.gAuthServ.getHeaders()}
+    );
+  }
+
+  public getCLient(idCLient: string) {
+    return this.http.get(
+      this.urlApiAdmin + '/admin/clients/' + idCLient,
       {headers: this.gAuthServ.getHeaders()}
     );
   }

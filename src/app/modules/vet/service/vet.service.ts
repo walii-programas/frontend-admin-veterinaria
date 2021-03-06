@@ -10,7 +10,7 @@ import { GlobalAuthService } from "../../../global/services/globalAuth.service";
 export class VetService {
 
   // variables
-  private urlApiAdmin = ''; 
+  private urlApiAdmin = this.gAuthServ.urlApiAdmin; 
   
   constructor(
     private http: HttpClient,
@@ -27,7 +27,7 @@ export class VetService {
 
   public vetRegister(vet: Vet) {
     return this.http.post(
-      this.urlApiAdmin + '/admin/vets', 
+      this.urlApiAdmin + '/admin/vets',
       this.gAuthServ.getFormUrlEncoded(vet),
       {headers: this.gAuthServ.getHeaders()});
   }
