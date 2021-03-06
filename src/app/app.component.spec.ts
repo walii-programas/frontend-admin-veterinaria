@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'veterinariasancarlos-frontend-admin'`, () => {
+  it(`should have as title 'veterinariasancarlos-frontend-client'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('veterinariasancarlos-frontend-admin');
+    expect(app.title).toEqual('veterinariasancarlos-frontend-client');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('veterinariasancarlos-frontend-admin app is running!');
+    expect(compiled.querySelector('.content span').textContent).toContain('veterinariasancarlos-frontend-client app is running!');
   });
 });
