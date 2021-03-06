@@ -1,0 +1,249 @@
+<div class="pet-vaccination-card">
+
+  <div class="container">
+
+    <!-- menu -->
+    <div class="pet-vaccination-card__menu">
+
+      <div class="row">
+        <h2>Tarjetas de Vacunas</h2>
+      </div>
+  
+      <div class="row">
+        <div class="col">
+          <h3>- Tarjetas de Vacunas de: <span> {{ pet.name }} </span> </h3>
+          <h3>- Dueño de Mascota: <span> {{ client.firstname }} {{ client.lastname }} </span> </h3>
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="col">
+          <button class="btn btn-primary" (click)="switchToPetVaccinationCardList()">Lista de Tarjetas de Vacunas</button>
+          <button class="btn btn-primary" (click)="switchToPetVaccinationCardReg()">Registrar nueva Tarjeta de Vacunas</button>
+          <button class="btn btn-secondary" (click)="backToPets()">Volver a Mascotas</button>
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- spinner -->
+    <div class="spinner-border" role="status" *ngIf="spinnerStatus">
+      <span class="sr-only">Cargando...</span>
+    </div>
+
+
+    <!-- ********************************* -->
+    <!-- register new pet vaccination card -->
+
+    <div class="container" *ngIf="switchRegvaccinationCard">
+
+      <!-- sub menu -->
+      <div class="row">
+        <div class="col">
+          <h3>Registrar Nueva Tarjeta de Vacunas</h3>
+        </div>
+      </div>
+
+      <!-- form register new pet vaccination card -->
+      <div class="row">
+
+        <div class="col">
+          <form class="pet-vaccination-card__formReg" [formGroup]="vaccinationCardFormReg" (ngSubmit)="vaccinationCardRegister(vaccinationCardFormReg.value)">
+            <div class="form-row">
+              <div class="col">
+                <input formControlName="cost" type="number" class="form-control" placeholder="Costo">
+              </div>
+              <!-- <div class="col">
+                <input formControlName="temperature" type="number" class="form-control" placeholder="Temperatura">
+              </div> -->
+            </div>
+            <div class="form-row">
+              <div class="col">
+                <textarea formControlName="description" cols="30" rows="5" class="form-control" placeholder="Descripción de la tarjeta de vacunas"></textarea>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary" [disabled]="vaccinationCardFormReg.invalid">Registrar Nueva Tarjeta de Vacunas</button>
+          </form>
+
+          <div class="row">
+            <div class="col">
+              <button class="btn btn-secondary" (click)="switchToPetVaccinationCardList()">Cancelar</button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ************************************ -->
+    <!-- add vaccines to pet vaccination card -->
+    <div class="container" *ngIf="switchToAddVaccines">
+
+      <!-- sub menu -->
+      <div class="row">
+        <div class="col">
+          <h3>Agregar Vacuna</h3>
+        </div>
+      </div>
+
+      <!-- details of pet vaccination card selected -->
+      <div class="row">
+        <h3>Carta de Vacunación Seleccionada: <span> {{ vaccinationCardSelected. description }} </span></h3>
+      </div>
+      
+      <!-- form add vaccines to pet vaccination card -->
+      <div class="row">
+        <div class="col">
+          <form class="pet-vaccination-card__formReg" [formGroup]="vaccineFormAdd" (ngSubmit)="addVaccine(vaccineFormAdd.value)">
+            <div class="form-row">
+              <div class="col">
+                <select formControlName="fk_id_vaccine" class="form-control">
+                  <!-- <option value="1">Vacuna 1</option>
+                  <option value="2">Vacuna 2</option> -->
+                  <option *ngFor="let vaccine of vaccines; index as i" value={{vaccine.id}}> {{vaccine.name}} </option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col">
+                <input formControlName="date" class="form-control" type="date">
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary" [disabled]="vaccineFormAdd.invalid">Agregar Vacuna</button>
+          </form>
+        </div>
+      </div>
+      
+      <!-- list vaccines added to pet vaccination card -->
+      <div class="row pet-vaccination-card__list-vaccines-added">
+
+        <div class="row">
+
+          <div *ngFor="let pvcd of petVaccinationCardsDetails; index as i" class="col">
+            <div class="card">
+              <div class="card-header">
+                {{ pvcd.pivot.date }}
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Nombre de vacuna: {{ pvcd.name }}</h5>
+                <p class="card-text">Estado de la vacuna: {{ pvcd.pivot.state }} </p>
+                <button class="btn btn-primary" (click)="removeVaccine(pvcd.pivot.vaccine_id, pvcd.pivot.date)">Quitar Vacuna</button>
+              </div>
+            </div>
+          </div>
+  
+          <!-- <div class="col">
+            <div class="card">
+              <div class="card-header">
+                Fecha de vacuna
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Nombre de vacuna</h5>
+                <p class="card-text">Estado de la vacuna:</p>
+                <button class="btn btn-primary" (click)="removeVaccine()">Quitar Vacuna</button>
+              </div>
+            </div>
+          </div> -->
+
+        </div>
+        
+      </div>
+
+    </div>
+
+
+    <!-- ********************* -->
+    <!-- vaccination card list -->
+
+    <div class="pet__container row" [hidden]="!switchListvaccinationCard">
+
+      <ngb-accordion [closeOthers]="true" activeIds="static-0">
+
+        <ngb-panel id="static-{{i}}" *ngFor="let pvc of vaccinationCards; index as i">
+
+          <ng-template ngbPanelTitle>
+            <h3><span>&#9733; <b>Descripcion: {{ pvc.petVaccinationCard.description }} </b></span></h3>
+            <button class="btn btn-primary" (click)="selectPetVaccinationCard(pvc.petVaccinationCard)">Agregar o Quitar Vacunas</button>
+          </ng-template>
+
+          <!-- <ngb-panel id="static-1">
+
+          <ng-template ngbPanelTitle>
+            <h3><span>&#9733; <b>Descripcion: </b></span></h3>
+            <button class="btn btn-primary">Agregar Vacunas</button>
+          </ng-template> -->
+
+          <ng-template ngbPanelContent>
+
+            <div class="row">
+
+              <div class="col" *ngFor="let vaccine of pvc.vaccines; index as i">
+                <div class="card">
+                  <div class="card-header">
+                    Fecha de vacuna: {{ vaccine.pivot.date }}
+                  </div>
+                  <div class="card-body">
+                    <h5 class="card-title">Nombre de vacuna: {{ vaccine.name }}</h5>
+                    <p class="card-text">Estado de la vacuna: {{ vaccine.pivot.state }}</p>
+                    <p>Veterinario que vacunó a la mascota: {{ vaccine.pivot.fk_id_vet }} </p>
+                    <button href="#" class="btn btn-primary">Marcar como vacunada</button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </ng-template>
+        </ngb-panel>
+
+      </ngb-accordion>
+
+      
+
+      <!-- <div class="col">
+        <ngb-accordion [closeOthers]="true" activeIds="static-1">
+
+          <ngb-panel id="static-{{pch.id}}" *ngFor="let pch of clinicalHistories; index as i">
+
+            <ng-template ngbPanelTitle>
+              <h3><span>&#9733; <b>Fecha de creación: {{ pch.date }} </b></span></h3>
+            </ng-template>
+
+            <ng-template ngbPanelContent>
+
+              <div class="row">
+
+                <div class="col-7">
+                  <h3>Datos del Historial Clínico</h3>
+                  <div class="form-group row">
+                    <div class="col-4">
+                      <label class="col col-form-label">Fecha de Creación:</label>
+                      <label class="col col-form-label">Peso:</label>
+                      <label class="col col-form-label">Temperatura:</label>
+                      <label class="col col-form-label">Observaciones:</label>
+                    </div>
+                    <div class="col">
+                      <label class="col col-form-label">{{ pch.date }}</label>
+                      <label class="col col-form-label">{{ pch.weight }} Kg</label>
+                      <label class="col col-form-label">{{ pch.temperature }} °C</label>
+                      <label class="col col-form-label">{{ pch.observations }}</label>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </ng-template>
+          </ngb-panel>
+
+        </ngb-accordion>
+      </div> -->
+    </div>
+
+  </div>
+
+</div>
