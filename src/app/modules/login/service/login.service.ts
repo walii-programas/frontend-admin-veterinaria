@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { GlobalAuthService } from "../../../global/services/globalAuth.service";
+import { Login } from "../interfaces/login.interface";
 
 @Injectable({
   providedIn:'root'
@@ -8,19 +9,20 @@ import { GlobalAuthService } from "../../../global/services/globalAuth.service";
 
 export class LoginService {
 
-  // vars
-  private urlApi = '';
+  /* variables */
+  private urlApi = 'http://localhost:8000/api';
 
   constructor(
     private http:HttpClient,
     private globalAuth: GlobalAuthService
   ) {}
 
-  // metods
-  public login(email: string, password: string) {
-    return this.http.post(this.urlApi + 'auth/login', this.globalAuth.getFormUrlEncoded({
-      email: email,
-      password: password
-    }), {headers: this.globalAuth.getHeaders()})
+  /* methods */
+  public login(dataLogin: Login) {
+    return this.http.post(
+      this.urlApi + '/auth/login',
+      this.globalAuth.getFormUrlEncoded(dataLogin),
+      {headers: this.globalAuth.getHeaders()}
+    );
   }
 }

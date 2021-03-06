@@ -64,13 +64,21 @@ export class PetComponent implements OnInit {
     this.initFormPetRegister();
   }
 
-  // change routes to clinicalhistory
+  // change route to clinical histories
   goToPetClinicalHistory(idPet: string) {
     this.router.navigateByUrl(`/home/historial-clinico/${idPet}`);
   }
-
+  // change route to vaccination cards
   goToPetVaccinationCards(idPet: string) {
     this.router.navigateByUrl(`/home/tarjeta-vacunas/${idPet}`);
+  }
+  // change route to simple services
+  goToPetSimpleServices(idPet: string) {
+    this.router.navigateByUrl(`/home/servicios-simples/${idPet}`);
+  }
+  // change route to hospitalized services
+  goToPetHospitalizedServices(idPet: string) {
+    this.router.navigateByUrl(`/home/servicios-hospitalizacion/${idPet}`);
   }
 
   // init form

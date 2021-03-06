@@ -4,7 +4,7 @@
 
     <!-- menu -->
 
-    <div class="pet-clininal-history__list">
+    <div class="pet-clininal-history__menu">
 
       <div class="row">
         <h2>Historial Clínico</h2>
@@ -54,66 +54,48 @@
       <button class="btn btn-secondary" (click)="switchPetClinicalHistoryList()">Cancelar</button>
     </div>
 
-    <!-- pet list -->
+    <!-- clinical history list -->
 
     <div class="pet__container row" [hidden]="!switchListclinicalhistory">
       <div class="col">
-        <ngb-accordion [closeOthers]="true" activeIds="static-1">
+        <ngb-accordion [closeOthers]="true" activeIds="static-0">
 
-          <ngb-panel id="static-{{pch.id}}" *ngFor="let pch of clinicalHistories; index as i">
+          <ngb-panel id="static-{{i}}" *ngFor="let pch of clinicalHistories; index as i">
 
             <ng-template ngbPanelTitle>
-              <h3><span>&#9733; <b>Fecha de creación: {{ pch.date }} </b> ;</span></h3>
+              <h3>Fecha de creación:<span><b> {{ pch.date }} </b></span></h3>
             </ng-template>
 
             <ng-template ngbPanelContent>
+              
+              <h3>Datos del Historial Clínico</h3>
 
-              <div class="row">
+              <div class="col-7">
 
-                <div class="col-7">
-                  <h3>Datos del Historial Clínico</h3>
-                  <div class="form-group row">
-                    <div class="col-4">
-                      <label class="col col-form-label">Fecha de Creación:</label>
-                      <label class="col col-form-label">Peso:</label>
-                      <label class="col col-form-label">Temperatura:</label>
-                      <label class="col col-form-label">Observaciones:</label>
-                    </div>
-                    <div class="col">
-                      <label class="col col-form-label">{{ pch.date }}</label>
-                      <label class="col col-form-label">{{ pch.weight }} Kg</label>
-                      <label class="col col-form-label">{{ pch.temperature }} °C</label>
-                      <label class="col col-form-label">{{ pch.observations }}</label>
-                    </div>
-                  </div>
+                <div class="form-group row">
+                  <label class="col col-form-label">Fecha de Creación:</label>
+                  <label class="col col-form-label">{{ pch.date }}</label>
                 </div>
-
-                <!-- <div class="col">
-                  <h3>Acciones</h3>
-
-                  <div class="form-group row">
-                    <div class="col">
-                      <button class="btn btn-primary">Ver el Historial Clínico</button>
-                    </div>
-                    <div class="col">
-                      <button class="btn btn-primary">Ver Tarjetas de Vacunas</button>
-                    </div>
-                  </div>
-
-                  <div class="form-group row">
-                    <div class="col">
-                      <button class="btn btn-primary">Crear Nuevo Historial Clínico</button>
-                    </div>
-                    <div class="col">
-                      <button class="btn btn-primary">Crear Nueva Tarjeta de Vacunas</button>
-                    </div>
-                  </div>
-
-                </div> -->
+  
+                <div class="form-group row">
+                  <label class="col col-form-label">Peso:</label>
+                  <label class="col col-form-label">{{ pch.weight }} Kg.</label>
+                </div>
+  
+                <div class="form-group row">
+                  <label class="col col-form-label">Temperatura:</label>
+                  <label class="col col-form-label">{{ pch.temperature }} °C</label>
+                </div>
+  
+                <div class="form-group row">
+                  <label class="col col-form-label">Observaciones:</label>
+                  <label class="col col-form-label">{{ pch.observations }}</label>
+                </div>
 
               </div>
 
             </ng-template>
+
           </ngb-panel>
 
         </ngb-accordion>

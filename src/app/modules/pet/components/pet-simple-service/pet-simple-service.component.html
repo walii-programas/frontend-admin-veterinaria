@@ -1,0 +1,118 @@
+<div class="pet-simple-service">
+
+  <div class="container">
+
+    <!-- menu -->
+
+    <div class="pet-simple-service__menu">
+
+      <div class="row">
+        <h2>Servicios Simples</h2>
+      </div>
+  
+      <div class="row">
+        <div class="col">
+          <h3>- Servicios Registrados de: <span> {{ pet.name }} </span> </h3>
+          <h3>- Dueño de Mascota: <span> {{ client.firstname }} {{ client.lastname }} </span> </h3>
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="col">
+          <button class="btn btn-primary" (click)="switchToPetSimpleServicesList()">Lista de Servicios Registrados</button>
+          <button class="btn btn-primary" (click)="switchToPetSimpleServiceFormReg()">Registrar Nuevo Servicio Simple</button>
+          <button class="btn btn-secondary" (click)="backToPets()">Volver a Mascotas</button>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="spinner-border" role="status" *ngIf="spinnerStatus">
+      <span class="sr-only">Cargando...</span>
+    </div>
+
+    <!-- register new pet simple service -->
+
+    <div class="container" *ngIf="switchSimpleServiceFormReg">
+      <h3>Registrar Nuevo Servicio Simple</h3>
+      <form class="pet-simple-service__formReg" [formGroup]="simpleServiceFormReg" (ngSubmit)="clinicalHistoryRegister(clinicalHistoryFormReg.value)">
+        <div class="form-row">
+          <div class="col">
+            <input formControlName="name" type="text" class="form-control" placeholder="Nombre del Servicio">
+          </div>
+          <div class="col">
+            <input formControlName="cost" type="number" class="form-control" placeholder="Costo">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col">
+            <textarea formControlName="description" cols="30" rows="8" class="form-control" placeholder="Descripción"></textarea>
+          </div>
+          <div class="col">
+            <textarea formControlName="symptoms" cols="30" rows="8" class="form-control" placeholder="Síntomas"></textarea>
+          </div>
+          <div class="col">
+            <textarea formControlName="treatment" cols="30" rows="8" class="form-control" placeholder="Tratamiento"></textarea>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="simpleServiceFormReg.invalid">Registrar Nuevo Servicio Simple</button>
+      </form>
+      <button class="btn btn-secondary" (click)="switchToPetSimpleServicesList()">Cancelar</button>
+    </div>
+
+    <!-- simple services list -->
+
+    <div class="pet__container row" [hidden]="!switchSimpleServicesList">
+      <div class="col">
+        <ngb-accordion [closeOthers]="true" activeIds="static-0">
+
+          <ngb-panel id="static-{{i}}" *ngFor="let pss of simpleServices; index as i">
+
+            <ng-template ngbPanelTitle>
+              <h3>Nombre del Servicio:<span><b> {{ pss.simpleService.name }} </b></span></h3>
+            </ng-template>
+
+            <ng-template ngbPanelContent>
+
+              <h3>Datos del Servicio Simple</h3>
+
+              <div class="col-7">
+
+                <div class="form-group row">
+                  <label class="col col-form-label">Fecha de Creación:</label>
+                  <label class="col col-form-label">{{ pss.simpleService.date }}</label>
+                </div>
+  
+                <div class="form-group row">
+                  <label class="col col-form-label">Descripción:</label>
+                  <label class="col col-form-label">{{ pss.simpleService.description }}</label>
+                </div>
+  
+                <div class="form-group row">
+                  <label class="col col-form-label">Síntomas:</label>
+                  <label class="col col-form-label">{{ pss.simpleService.symptoms }}</label>
+                </div>
+  
+                <div class="form-group row">
+                  <label class="col col-form-label">Tratamiento:</label>
+                  <label class="col col-form-label">{{ pss.simpleService.treatment }}</label>
+                </div>
+  
+                <div class="form-group row">
+                  <label class="col col-form-label">Costo:</label>
+                  <label class="col col-form-label">S/ {{ pss.simpleService.cost }}</label>
+                </div>
+
+              </div>
+
+            </ng-template>
+
+          </ngb-panel>
+
+        </ngb-accordion>
+      </div>
+    </div>
+
+  </div>
+
+</div>

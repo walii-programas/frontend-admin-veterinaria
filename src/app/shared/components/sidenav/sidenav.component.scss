@@ -50,6 +50,7 @@
 
 .nav-link:hover {
   filter: grayscale(0%) opacity(1);
+  border-radius: 0.7rem;
   background: var(--secondary-color);
   color: var(--text-secondary);
   .fa-primary {

@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpHeaders } from "@angular/common/http";
+import { HttpHeaders, HttpClient } from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +7,7 @@ import { HttpHeaders } from "@angular/common/http";
 
 export class GlobalAuthService {
   
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   // public variables
   public urlApiAdmin = 'http://localhost:8000/api';
@@ -25,21 +25,30 @@ export class GlobalAuthService {
 
   public getHeaders() {
     return new HttpHeaders({
-      'Authorization': 'Bearer' + localStorage.getItem('token'),
+      'Authorization': 'Bearer ' + localStorage.getItem('token'),
       'Content-Type': 'application/x-www-form-urlencoded'
     });
   }
 
-  // public getLoginStatus():boolean{
-  //   if(localStorage.getItem('token') !== null){
-  //       let current = new Date(localStorage.getItem('expires_in'));
-  //       let actual = new Date();
-  //       if (actual < current) {
-  //           return true;
-  //       } else{
-  //           return false;
-  //       }
-  //   }
-  //   return false;
-  // }
+  public getLoginStatus():boolean{
+    if(localStorage.getItem('token') !== null){
+        let current = new Date(localStorage.getItem('expires_in'));
+        let actual = new Date();
+        if (actual < current) {
+            return true;
+        } else{
+            return false;
+        }
+    }
+    return false;
+  }
+
+  public logout() {
+    return this.http.post(
+      this.urlApiAdmin + '/auth/logout',
+      {},
+      {headers: this.getHeaders()}
+    );
+  }
+
 }

@@ -14,6 +14,10 @@ import { VetComponent } from './modules/vet/components/vet.component';
 import { ClientComponent } from './modules/client/components/client.component';
 import { PetComponent } from './modules/pet/components/pet.component';
 import { PetClinicalHistoryComponent } from './modules/pet/components/pet-clinical-history/pet-clinical-history.component';
+import { PetVaccinationCardComponent } from './modules/pet/components/pet-vaccination-card/pet-vaccination-card.component';
+import { VaccineComponent } from './modules/vaccine/components/vaccine.component';
+import { PetSimpleServiceComponent } from './modules/pet/components/pet-simple-service/pet-simple-service.component';
+import { PetHospitalizedServiceComponent } from './modules/pet/components/pet-hospitalized-service/pet-hospitalized-service.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +28,11 @@ import { PetClinicalHistoryComponent } from './modules/pet/components/pet-clinic
     VetComponent,
     ClientComponent,
     PetComponent,
-    PetClinicalHistoryComponent
+    PetClinicalHistoryComponent,
+    PetVaccinationCardComponent,
+    VaccineComponent,
+    PetSimpleServiceComponent,
+    PetHospitalizedServiceComponent
   ],
   imports: [
     BrowserModule,

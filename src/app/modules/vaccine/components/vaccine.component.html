@@ -17,7 +17,7 @@
     <form class="vaccine__formReg" [formGroup]="vaccineFormReg" (ngSubmit)="vaccineRegister(vaccineFormReg.value)">
       <div class="form-row">
         <div class="col">
-          <input formControlName="name" type="text" class="form-control" placeholder="Nomrbe de la vacuna">
+          <input formControlName="name" type="text" class="form-control" placeholder="Nombre de la vacuna">
         </div>
       </div>
       <button type="submit" class="btn btn-primary" [disabled]="vaccineFormReg.invalid">Registrar Nueva Vacuna</button>
@@ -39,7 +39,7 @@
       </div>
     </form>
     
-    <table class="table table-striped">
+    <table class="table table-borderless table-hover">
       <thead>
       <tr>
         <th scope="col">#</th>

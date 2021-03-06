@@ -88,12 +88,12 @@
 
     <div class="pet__container row" [hidden]="!switchListpet">
       <div class="col">
-        <ngb-accordion [closeOthers]="true" activeIds="static-1">
+        <ngb-accordion [closeOthers]="true" activeIds="static-0">
 
-          <ngb-panel id="static-{{pet.id}}" *ngFor="let pet of pets; index as i">
+          <ngb-panel id="static-{{i}}" *ngFor="let pet of pets; index as i">
 
             <ng-template ngbPanelTitle>
-              <h3><span>&#9733; <b>{{pet.name}}</b> </span></h3>
+              <h3>Nombre de Mascota:<span><b> {{pet.name}}</b> </span></h3>
             </ng-template>
 
             <ng-template ngbPanelContent>
@@ -107,12 +107,12 @@
                   <div class="form-group row">
 
                     <div class="col-4">
-                      <label class="col col-form-label">Nombres:</label>
-                      <label class="col col-form-label">Especie:</label>
-                      <label class="col col-form-label">Raza:</label>
-                      <label class="col col-form-label">Color:</label>
-                      <label class="col col-form-label">Sexo:</label>
-                      <label class="col col-form-label">Fecha de Nacimiento:</label>
+                      <label class="col col-form-label"><b>Nombres:</b></label>
+                      <label class="col col-form-label"><b>Especie:</b></label>
+                      <label class="col col-form-label"><b>Raza:</b></label>
+                      <label class="col col-form-label"><b>Color:</b></label>
+                      <label class="col col-form-label"><b>Sexo:</b></label>
+                      <label class="col col-form-label"><b>Fecha de Nacimiento:</b></label>
                     </div>
 
                     <div class="col">
@@ -138,6 +138,16 @@
 
                     <div class="col">
                       <button class="btn btn-primary" (click)="goToPetVaccinationCards(pet.id)">Crear o Ver Tarjetas de Vacunas</button>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <div class="col">
+                      <button class="btn btn-primary" (click)="goToPetSimpleServices(pet.id)">Crear o Ver los Servicios Simples</button>
+                    </div>
+
+                    <div class="col">
+                      <button class="btn btn-primary" (click)="goToPetHospitalizedServices(pet.id)">Crear o Ver Servicios de Hospitalización</button>
                     </div>
                   </div>
 

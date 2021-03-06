@@ -177,6 +177,26 @@ export class PetVaccinationCardComponent implements OnInit {
     }
   }
 
+  updatePvcDetail(
+    vaccine: PetVaccinationCardDetails,
+    petVaccinationCard: PetVaccinationCard
+  ) {
+    this.updatingVaccineState = true;
+    this.vaccinationCardSelected = petVaccinationCard;
+    this.petService.putVaccineFromPetVaccinationCard(
+      vaccine.pivot.vaccine_id,
+      vaccine.pivot.date,
+      petVaccinationCard
+    ).subscribe((res) => {
+      console.log(res);
+      this.vaccinationCardGetListAll();
+      this.updatingVaccineState = false;
+    }, (err) => {
+      console.log(err);
+      this.updatingVaccineState = false;
+    });
+  }
+
 
   
   /* UI */
@@ -193,6 +213,7 @@ export class PetVaccinationCardComponent implements OnInit {
   switchToAddVaccines = false;
 
   spinnerStatus = false;
+  updatingVaccineState = false;
 
   // UI methods--
 

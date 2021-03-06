@@ -1,5 +1,16 @@
+.login {
+  height: 100vh;
+  padding: 5rem 0;
+}
+
+.login__item {
+  margin: auto;
+}
+
 .login__item img {
-  background-color: var(--bg-secondary);
-  width: 400px;
-  height: 400px;
+  // background-color: var(--bg-secondary);
+  // width: 500px;
+  // height: 500px;
+  width: 100%;
+  height: 100%;
 }

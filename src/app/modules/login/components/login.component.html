@@ -1,24 +1,36 @@
 <div class="login container">
-  <div class="row">
-    
-    <div class="login__item">
-      <img src="" alt="">
-    </div>
 
-    <div class="login__item">
-      <form class="login__form">
+  <div class="login__section row">
+    
+      <div class="login__item col">
+        <img src="../../../../assets/login/login01.png" alt="veterinaria-san-carlos">
+      </div>
+  
+      <div class="login__item col">
+
         <div class="form-group">
-          <label for="exampleInputEmail1">Correo Electrónico</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+          <h2>Veterinaria San Carlos - Administrador</h2>
         </div>
-        <div class="form-group">
-          <label for="exampleInputPassword1">Contraseña</label>
-          <input type="password" class="form-control" id="exampleInputPassword1">
+        <form class="login__form" [formGroup]="loginForm" (ngSubmit)="login(loginForm.value)">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Correo Electrónico</label>
+            <input formControlName="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Contraseña</label>
+            <input formControlName="password" type="password" class="form-control" id="exampleInputPassword1">
+          </div>
+          <small id="emailHelp" class="form-text text-muted">No compartas tu cuenta con nadie.</small>
+          <div class="container login__spinner">
+          <div class="spinner-border text-primary" role="status" *ngIf="spinnerStatus">
+            <span class="sr-only">Cargando...</span>
+          </div>
         </div>
-        <small id="emailHelp" class="form-text text-muted">No compartas tu cuenta con nadie.</small>
-        <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
-      </form>
-    </div>
+          <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Iniciar Sesión</button>
+        </form>
+        
+      </div>
 
   </div>
+
 </div>

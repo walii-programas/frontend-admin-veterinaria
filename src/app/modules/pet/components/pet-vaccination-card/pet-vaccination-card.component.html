@@ -166,8 +166,8 @@
         <ngb-panel id="static-{{i}}" *ngFor="let pvc of vaccinationCards; index as i">
 
           <ng-template ngbPanelTitle>
-            <h3><span>&#9733; <b>Descripcion: {{ pvc.petVaccinationCard.description }} </b></span></h3>
-            <button class="btn btn-primary" (click)="selectPetVaccinationCard(pvc.petVaccinationCard)">Agregar o Quitar Vacunas</button>
+            <h3>Descripcion:<span><b> {{ pvc.petVaccinationCard.description }} </b></span><button class="btn btn-primary" (click)="selectPetVaccinationCard(pvc.petVaccinationCard)">Agregar o Quitar Vacunas</button></h3>
+            
           </ng-template>
 
           <!-- <ngb-panel id="static-1">
@@ -181,16 +181,20 @@
 
             <div class="row">
 
-              <div class="col" *ngFor="let vaccine of pvc.vaccines; index as i">
+              <div class="col-3" *ngFor="let vaccine of pvc.vaccines; index as i">
                 <div class="card">
                   <div class="card-header">
-                    Fecha de vacuna: {{ vaccine.pivot.date }}
+                    <b>Fecha de vacuna:</b> {{ vaccine.pivot.date }}
                   </div>
                   <div class="card-body">
-                    <h5 class="card-title">Nombre de vacuna: {{ vaccine.name }}</h5>
-                    <p class="card-text">Estado de la vacuna: {{ vaccine.pivot.state }}</p>
-                    <p>Veterinario que vacunó a la mascota: {{ vaccine.pivot.fk_id_vet }} </p>
-                    <button href="#" class="btn btn-primary">Marcar como vacunada</button>
+                    <h5 class="card-title"><b>Nombre de vacuna:</b> {{ vaccine.name }}</h5>
+                    <p class="card-text"><b>Estado de la vacuna:</b> {{ vaccine.pivot.state }}</p>
+                    <p *ngIf="vaccine.pivot.fk_id_vet"><b>Veterinario que vacunó a la mascota:</b> {{ '' || vaccine.pivot.vet.firstname }} </p>
+                    <p *ngIf="vaccine.pivot.fk_id_vet"><b>Código del veterinario:</b> {{'' || vaccine.pivot.vet.cmvp}} </p>
+                    <button [hidden]="vaccine.pivot.fk_id_vet" href="#" class="btn btn-primary" (click)="updatePvcDetail(vaccine, pvc.petVaccinationCard)">Marcar como vacunada</button>
+                    <div [hidden]="vaccine.pivot.fk_id_vet" class="spinner-border" role="status" *ngIf="updatingVaccineState">
+                      <span class="sr-only">Cargando...</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -198,6 +202,7 @@
             </div>
 
           </ng-template>
+
         </ngb-panel>
 
       </ngb-accordion>

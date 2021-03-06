@@ -121,7 +121,7 @@ export class PetClinicalHistoryComponent implements OnInit {
     });
   }
 
-  // register new pet
+  // register new clinical history
   clinicalHistoryRegister(dataPetClinicalHistory: PetClinicalHistory) {
     dataPetClinicalHistory.fk_id_pet = this.idPet;
     this.petService.postPetClinicalHistory(dataPetClinicalHistory).subscribe((res) => {
