@@ -18,6 +18,7 @@ import { HomeComponent } from "./modules/home/components/home.component";
   import { PetHospitalizedServiceComponent } from './modules/pet/components/pet-hospitalized-service/pet-hospitalized-service.component';
   import { VetEditComponent } from './modules/vet/components/vet-edit/vet-edit.component';
   import { RoleComponent } from "./modules/role/components/role.component";
+  import { ClientEditComponent } from './modules/client/components/client-edit/client-edit.component';
 
 /* guards */
 import { AuthGuard } from './global/guards/auth.guard';
@@ -35,6 +36,7 @@ const routes: Routes = [
     {path:'vacunas', component: VaccineComponent},
     {path: 'veterinarios', component: VetComponent},
     {path: 'editar-veterinario/:id', component: VetEditComponent},
+    {path: 'editar-cliente/:id', component: ClientEditComponent},
     {path: 'roles', component: RoleComponent}
   ], canActivate: [AuthGuard]}
 ];

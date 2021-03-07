@@ -19,8 +19,27 @@ export class RoleService {
 
   /* methods */
   public getRoles() {
+    // this.gAuthServ.validateAndRefreshToken();
     return this.http.get(
       this.urlApiAdmin + '/admin/roles',
+      {headers: this.gAuthServ.getHeaders()}
+    );
+  }
+
+  public postRole(role: Role) {
+    // this.gAuthServ.validateAndRefreshToken();
+    return this.http.post(
+      this.urlApiAdmin + '/admin/roles',
+      this.gAuthServ.getFormUrlEncoded(role),
+      {headers: this.gAuthServ.getHeaders()}
+    );
+  }
+
+  public putRole(role: Role, idRole: string) {
+    // this.gAuthServ.validateAndRefreshToken();
+    return this.http.put(
+      this.urlApiAdmin + '/admin/roles/' + idRole,
+      this.gAuthServ.getFormUrlEncoded(role),
       {headers: this.gAuthServ.getHeaders()}
     );
   }

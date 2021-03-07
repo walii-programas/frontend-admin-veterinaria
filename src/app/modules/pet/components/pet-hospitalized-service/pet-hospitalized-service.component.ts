@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from "@angular/router";
-import { Location } from "@angular/common";
+import { Location, DatePipe } from "@angular/common";
 import { PetService } from "../../service/pet.service";
 import { HospitalizedService, PetHospitalizedService } from '../../interfaces/petHospitalizedService.interface';
 import { Client } from "../../../client/interfaces/client.interface";
@@ -27,7 +27,8 @@ export class PetHospitalizedServiceComponent implements OnInit {
     private location: Location,
     private router: Router,
     private formBuilder: FormBuilder,
-    private petService: PetService
+    private petService: PetService,
+    private datePipe: DatePipe
   ) {
     // get id_client on load
     this.idPet = this.activatedRoute.snapshot.paramMap.get('id') || '';
@@ -53,6 +54,10 @@ export class PetHospitalizedServiceComponent implements OnInit {
     this.spinnerStatus = true;
     this.petService.getHospitalizedServicesByPet(this.idPet).subscribe((res) => {
       // console.log(res);
+      res['data'].forEach(phs => {
+        phs.hospitalizedService.date = this.datePipe.transform(phs.hospitalizedService.date, "EEEE, dd 'de' MMMM 'del' y, h:mm a");
+        phs.hospitalizedService.updated_at = this.datePipe.transform(phs.hospitalizedService.updated_at, "EEEE, dd 'de' MMMM 'del' y, h:mm a");
+      });
       this.hospitalizedServices = res['data'];
       this.spinnerStatus = false;
     }, (err) => {
@@ -114,17 +119,20 @@ export class PetHospitalizedServiceComponent implements OnInit {
     this.hospitalizedServiceFormReg = this.formBuilder.group({
       'diagnosis': ['',[Validators.required]],
       'description': ['',[Validators.required]],
-      'symptoms': ['', [Validators.required]],
       'treatment': ['', [Validators.required]],
-      'initial_date': ['', [Validators.required]],
-      'final_date': ['', []],
       'cost': ['', [Validators.required]],
+      'weight': ['', [Validators.required]],
+      'temperature': ['', [Validators.required]],
+      'symptoms': ['', [Validators.required]],
+      'observations': ['', [Validators.required]]
+      // 'initial_date': ['', [Validators.required]],
+      // 'final_date': ['', []],
     });
   }
 
   // get client from local storage
   getLocalStorageClient() {
-    return JSON.parse(localStorage.getItem('clientSelected'))[0];
+    return JSON.parse(localStorage.getItem('clientSelected'));
   }
 
   // get pet from local storage

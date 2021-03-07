@@ -26,6 +26,8 @@
 
     </div>
 
+    <hr>
+
 
     <!-- spinner -->
     <div class="spinner-border" role="status" *ngIf="spinnerStatus">
@@ -177,34 +179,34 @@
           <ng-template ngbPanelTitle>
             <div class="container">
               <div class="row">
-                <h3>
-                  Descripcion:
-                  <span>
-                    <b> {{ pvc.petVaccinationCard.description }} </b>
-                  </span>
-                </h3>
+                <div class="col">
+                  <h3>
+                    Descripcion:
+                    <span>
+                      <b> {{ pvc.petVaccinationCard.description }} </b>
+                    </span>
+                  </h3>
+                </div>
               </div>
+              <!-- <hr> -->
               <div class="row">
-                <h3>
-                  
-                  Fecha de Creación: 
-                  <span>
-                    <b> {{ pvc.petVaccinationCard.date }} </b>
-                  </span>
-                </h3>
+                <div class="col">
+                  <h3>
+                    Fecha de Creación: 
+                    <span>
+                      <b> {{ pvc.petVaccinationCard.date }} </b>
+                    </span>
+                  </h3>
+                </div>
               </div>
+              <!-- <hr> -->
               <div class="row">
-                <button class="btn btn-primary" (click)="selectPetVaccinationCard(pvc.petVaccinationCard)">Agregar o Quitar Vacunas</button>
+                <div class="col">
+                  <button class="btn btn-primary button-tittle" (click)="selectPetVaccinationCard(pvc.petVaccinationCard)">Agregar o Quitar Vacunas a Esta Tarjeta</button>
+                </div>
               </div>
             </div>
           </ng-template>
-
-          <!-- <ngb-panel id="static-1">
-
-          <ng-template ngbPanelTitle>
-            <h3><span>&#9733; <b>Descripcion: </b></span></h3>
-            <button class="btn btn-primary">Agregar Vacunas</button>
-          </ng-template> -->
 
           <ng-template ngbPanelContent>
 
@@ -213,13 +215,22 @@
               <div class="col-3" *ngFor="let vaccine of pvc.vaccines; index as i">
                 <div class="card">
                   <div class="card-header">
-                    <h4><b>Fecha de vacuna: </b> <span>{{ vaccine.pivot.date }}</span></h4>
+                    <h4><b>Fecha de vacuna: </b></h4>
+                    <h4><span>{{ vaccine.pivot.date }}</span></h4>
                   </div>
                   <div class="card-body">
-                    <p class="card-title"><b>Nombre de vacuna: </b> <span>{{ vaccine.name }}</span></p>
-                    <p class="card-text"><b>Estado de la vacuna:</b> {{ vaccine.pivot.state }}</p>
-                    <p *ngIf="vaccine.pivot.fk_id_vet"><b>Veterinario que vacunó a la mascota:</b> {{ '' || vaccine.pivot.vet.firstname }} </p>
-                    <p *ngIf="vaccine.pivot.fk_id_vet"><b>Código del veterinario:</b> {{'' || vaccine.pivot.vet.cmvp}} </p>
+                    <p class="card-title"><b>Nombre de vacuna: </b></p>
+                    <p class="card-text"><label>{{ vaccine.name }}</label></p>
+
+                    <p class="card-title"><b>Estado de la vacuna:</b></p>
+                    <p class="card-text"><label>{{ vaccine.pivot.state }}</label></p>
+
+                    <p *ngIf="vaccine.pivot.fk_id_vet"><b>Veterinario que vacunó a la mascota:</b></p>
+                    <p *ngIf="vaccine.pivot.fk_id_vet"> <label> {{ '' || vaccine.pivot.vet.firstname }} </label> </p>
+
+                    <p *ngIf="vaccine.pivot.fk_id_vet"><b>Código del veterinario:</b></p>
+                    <p *ngIf="vaccine.pivot.fk_id_vet"> <label> {{'' || vaccine.pivot.vet.cmvp}} </label> </p>
+
                     <button [hidden]="vaccine.pivot.fk_id_vet" href="#" class="btn btn-primary" (click)="updatePvcDetail(vaccine, pvc.petVaccinationCard)">Marcar como vacunada</button>
                     <div [hidden]="vaccine.pivot.fk_id_vet" class="spinner-border" role="status" *ngIf="updatingVaccineState">
                       <span class="sr-only">Cargando...</span>

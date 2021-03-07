@@ -19,6 +19,7 @@ export class VaccineService {
 
   /* methods */
   getVaccines() {
+    // this.gAuthServ.validateAndRefreshToken();
     return this.http.get(
       this.urlApiAdmin + '/admin/vaccines',
       {headers: this.gAuthServ.getHeaders()}
@@ -26,6 +27,7 @@ export class VaccineService {
   }
 
   postVaccine(vaccine: Vaccine) {
+    // this.gAuthServ.validateAndRefreshToken();
     return this.http.post(
       this.urlApiAdmin + '/admin/vaccines',
       this.gAuthServ.getFormUrlEncoded(vaccine),

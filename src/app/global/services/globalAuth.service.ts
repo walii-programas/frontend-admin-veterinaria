@@ -12,7 +12,7 @@ export class GlobalAuthService {
   // public variables
   public urlApiAdmin = 'http://localhost:8000/api';
 
-  public currentLoginStatus = 50
+  public currentLoginStatus: number;
 
   // public metods
   public getFormUrlEncoded(toConvert:any) {
@@ -32,12 +32,24 @@ export class GlobalAuthService {
     });
   }
 
+  // public getLoginStatus(): boolean {
+  //   if(localStorage.getItem('token') !== null) {
+  //       let current = new Date(Date.now() + (parseInt(localStorage.getItem('expires_in')) - 3600000));
+  //       let actual = new Date();
+  //       if (actual > current) {
+  //           return true;
+  //       } else {
+  //           return false;
+  //       }
+  //   }
+  //   return false;
+  // }
+
   public getLoginStatus(): boolean {
     if(localStorage.getItem('token') !== null) {
-        let current = new Date(Date.now() + (parseInt(localStorage.getItem('expires_in')) - 3600000));
-        // let current = new Date(localStorage.getItem('expires_in'));
-        let actual = new Date();
-        if (actual > current) {
+        let current = parseInt(localStorage.getItem('expires_in'));
+        let actual = Date.now();
+        if (actual < current) {
             return true;
         } else {
             return false;
@@ -54,17 +66,31 @@ export class GlobalAuthService {
     );
   }
 
-  public refreshToken() {
+  private refreshToken() {
     return this.http.post(
       this.urlApiAdmin + '/auth/refresh',
       {},
       {headers: this.getHeaders()}
-    ).subscribe((res) => {
-      console.log(res);
-      localStorage.setItem('token', res['token']);
-    }, (err) => {
-      console.log(err);
-    });
+    )
+  }
+
+  public validateAndRefreshToken() {
+    // get value of ten minuts before that expires in
+    let current = (parseInt(localStorage.getItem('expires_in')) - 600000);
+    let actual = Date.now();
+    if (actual > current) {
+      this.refreshToken().subscribe((res) => {
+        console.log(res);
+        localStorage.setItem('token', res['token']);
+        this.calcExpiresIn(3600);
+        localStorage.setItem('expires_in', (this.currentLoginStatus).toString());
+      })
+    }
+  }
+
+  // support methods
+  public calcExpiresIn(expiresFromApi: number) {
+    this.currentLoginStatus = (Date.now() + (expiresFromApi * 1000));
   }
 
 }

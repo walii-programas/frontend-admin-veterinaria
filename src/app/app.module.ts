@@ -1,8 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
+import localeEs from "@angular/common/locales/es-PE";
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AsyncPipe, DecimalPipe, SlicePipe } from '@angular/common';
+import { AsyncPipe, DatePipe, DecimalPipe, registerLocaleData, SlicePipe } from '@angular/common';
+registerLocaleData(localeEs, 'es-PE')
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,6 +22,8 @@ import { PetSimpleServiceComponent } from './modules/pet/components/pet-simple-s
 import { PetHospitalizedServiceComponent } from './modules/pet/components/pet-hospitalized-service/pet-hospitalized-service.component';
 import { VetEditComponent } from './modules/vet/components/vet-edit/vet-edit.component';
 import { RoleComponent } from './modules/role/components/role.component';
+import { ClientEditComponent } from './modules/client/components/client-edit/client-edit.component';
+import { PetHospitalizedServiceEditComponent } from './modules/pet/components/pet-hospitalized-service/pet-hospitalized-service-edit/pet-hospitalized-service-edit.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +40,9 @@ import { RoleComponent } from './modules/role/components/role.component';
     PetSimpleServiceComponent,
     PetHospitalizedServiceComponent,
     VetEditComponent,
-    RoleComponent
+    RoleComponent,
+    ClientEditComponent,
+    PetHospitalizedServiceEditComponent
   ],
   imports: [
     BrowserModule,
@@ -47,6 +53,8 @@ import { RoleComponent } from './modules/role/components/role.component';
     ReactiveFormsModule,
   ],
   providers: [
+    DatePipe,
+    {provide: LOCALE_ID, useValue: 'es-PE'},
     // DecimalPipe,
     SlicePipe,
     AsyncPipe

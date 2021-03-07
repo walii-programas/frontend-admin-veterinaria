@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { Login } from '../interfaces/login.interface';
 import { LoginService } from '../service/login.service';
 import { VetService } from "../../vet/service/vet.service";
+import { GlobalAuthService } from 'src/app/global/services/globalAuth.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder,
     private loginService: LoginService,
     private vetService: VetService,
-    private router: Router
+    private router: Router,
+    private gAuthServ: GlobalAuthService
   ) { }
 
   ngOnInit(): void {
@@ -34,7 +36,9 @@ export class LoginComponent implements OnInit {
     this.loginService.login(dataLogin).subscribe((res) => {
       // console.log(res);
       if (res['vet'] == true) {
-        localStorage.setItem('expires_in', res['expires_in']);
+        this.gAuthServ.calcExpiresIn(res['expires_in']);
+        // localStorage.setItem('expires_in', res['expires_in']);
+        localStorage.setItem('expires_in', (this.gAuthServ.currentLoginStatus).toString());
         localStorage.setItem('token', res['access_token']);
         this.spinnerStatus = false;
         this.vetService.getVetRoles(res['user'].id).subscribe((res) => {

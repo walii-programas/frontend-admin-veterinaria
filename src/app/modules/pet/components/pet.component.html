@@ -15,9 +15,9 @@
         <span class="sr-only">Cargando...</span>
       </div>
   
-      <div class="row" *ngFor="let clt of client">
+      <div class="row">
         <div class="col">
-          <h3>Mascotas de Cliente: <span> {{ clt.firstname }} {{ clt.lastname }}  </span> </h3>
+          <h3>Mascotas de Cliente: <span> {{ client.firstname }} {{ client.lastname }}  </span> </h3>
         </div>
       </div>
   
@@ -30,6 +30,8 @@
       </div>
 
     </div>
+
+    <hr>
 
     <div class="spinner-border" role="status" *ngIf="spinnerStatus">
       <span class="sr-only">Cargando...</span>
@@ -101,13 +103,24 @@
               <div class="row">
 
                 <div class="col-7">
+                  <h3><span>Datos Generales</span></h3>
+                </div>
+                <div class="col-5">
+                  <h3><span>Acciones</span></h3>
+                </div>
 
-                  <h3>Datos Generales</h3>
+              </div>
+
+              <div class="row">
+
+                <div class="col-7">
+
+                  <!-- <h3><span>Datos Generales</span></h3> -->
 
                   <div class="form-group row">
 
                     <div class="col-4">
-                      <label class="col col-form-label"><b>Nombres:</b></label>
+                      <label class="col col-form-label"><b>Nombre:</b></label>
                       <label class="col col-form-label"><b>Especie:</b></label>
                       <label class="col col-form-label"><b>Raza:</b></label>
                       <label class="col col-form-label"><b>Color:</b></label>
@@ -129,17 +142,7 @@
                 </div>
 
                 <div class="col">
-                  <h3>Acciones</h3>
-
-                  <div class="form-group row">
-                    <div class="col">
-                      <button class="btn btn-primary" (click)="goToPetClinicalHistory(pet.id)">Crear o Ver el Historial Clínico</button>
-                    </div>
-
-                    <div class="col">
-                      <button class="btn btn-primary" (click)="goToPetVaccinationCards(pet.id)">Crear o Ver Tarjetas de Vacunas</button>
-                    </div>
-                  </div>
+                  <!-- <h3><span>Acciones</span></h3> -->
 
                   <div class="form-group row">
                     <div class="col">
@@ -147,7 +150,17 @@
                     </div>
 
                     <div class="col">
-                      <button class="btn btn-primary" (click)="goToPetHospitalizedServices(pet.id)">Crear o Ver Servicios de Hospitalización</button>
+                      <button class="btn btn-primary" (click)="goToPetHospitalizedServices(pet.id)">Crear o Ver Servicios de Internado</button>
+                    </div>
+                  </div>
+
+                  <div class="form-group row d-flex justify-content-center">
+                    <!-- <div class="col">
+                      <button class="btn btn-primary" (click)="goToPetClinicalHistory(pet.id)">Crear o Ver el Historial Clínico</button>
+                    </div> -->
+
+                    <div class="col-6">
+                      <button class="btn btn-primary" (click)="goToPetVaccinationCards(pet.id)">Crear o Ver Tarjetas de Vacunas</button>
                     </div>
                   </div>
 

@@ -30,7 +30,7 @@ export class VaccineComponent implements OnInit {
     this.vaccineGetAll();
   }
 
-  // filter vets
+  // filter vaccines
   vaccines$: Observable<Vaccine[]>;
   filter = new FormControl('');
   vaccines: Vaccine[] = [];

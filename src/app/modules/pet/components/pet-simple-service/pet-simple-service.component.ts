@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from "@angular/router";
-import { Location } from "@angular/common";
+import { Location, DatePipe } from "@angular/common";
 import { PetService } from "../../service/pet.service";
 import { PetSimpleService, SimpleService } from '../../interfaces/petSimpleService.interface';
 import { Client } from "../../../client/interfaces/client.interface";
@@ -27,7 +27,8 @@ export class PetSimpleServiceComponent implements OnInit {
     private location: Location,
     private router: Router,
     private formBuilder: FormBuilder,
-    private petService: PetService
+    private petService: PetService,
+    private datePipe: DatePipe
   ) {
     // get id_client on load
     this.idPet = this.activatedRoute.snapshot.paramMap.get('id') || '';
@@ -53,6 +54,9 @@ export class PetSimpleServiceComponent implements OnInit {
     this.spinnerStatus = true;
     this.petService.getSimpleServicesByPet(this.idPet).subscribe((res) => {
       // console.log(res);
+      res['data'].forEach(pss => {
+        pss.simpleService.date = this.datePipe.transform(pss.simpleService.date, "EEEE, dd 'de' MMMM 'del' y, h:mm a")
+      });
       this.simpleServices = res['data'];
       this.spinnerStatus = false;
     }, (err) => {
@@ -114,15 +118,18 @@ export class PetSimpleServiceComponent implements OnInit {
     this.simpleServiceFormReg = this.formBuilder.group({
       'name': ['',[Validators.required]],
       'description': ['',[Validators.required]],
-      'symptoms': ['', [Validators.required]],
       'treatment': ['', [Validators.required]],
       'cost': ['', [Validators.required]],
+      'weight': ['', [Validators.required]],
+      'temperature': ['', [Validators.required]],
+      'symptoms': ['', [Validators.required]],
+      'observations': ['', [Validators.required]]
     });
   }
 
   // get client from local storage
   getLocalStorageClient() {
-    return JSON.parse(localStorage.getItem('clientSelected'))[0];
+    return JSON.parse(localStorage.getItem('clientSelected'));
   }
 
   // get pet from local storage

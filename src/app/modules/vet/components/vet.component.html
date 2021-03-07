@@ -12,6 +12,8 @@
 
   </div>
 
+  <hr>
+
   <div class="container" *ngIf="switchRegVet">
     <h3>Registrar Nuevo Veterinario</h3>
     <form class="vet__formReg" [formGroup]="vetFormReg" (ngSubmit)="vetRegister(vetFormReg.value)">

@@ -5,7 +5,6 @@ import { VetService } from "../../service/vet.service";
 import { RoleService } from "../../../role/services/role.service";
 import { Vet, VetRoles } from '../../interfaces/vet.interface';
 import { Role } from 'src/app/modules/role/interfaces/role.interface';
-import { element } from 'protractor';
 
 @Component({
   selector: 'app-vet-edit',
@@ -28,6 +27,8 @@ export class VetEditComponent implements OnInit {
     this.getVet();
     // get all roles
     this.getRoles();
+    // init form password
+    this.initFormPassword();  
   }
 
   ngOnInit(): void {
@@ -36,6 +37,7 @@ export class VetEditComponent implements OnInit {
   /* API METHODS */
   // variables
   vetFormUpdate: FormGroup;
+  vetPasswordForm: FormGroup;
   idVet: string;
   vet: Vet;
   allRoles: Role[] = [];
@@ -51,6 +53,24 @@ export class VetEditComponent implements OnInit {
     }, (err) => {
       console.log(err);
       this.spinnerStatus = false;
+    });
+  }
+
+  updatePassword(data: any) {
+    this.spinnerStatus = true;
+    this.vetService.vetPasswordUpdate(data.password, this.idVet).subscribe((res) => {
+      console.log(res);
+      this.spinnerStatus = false;
+      // this.router.navigateByUrl('/home/veterinarios');
+      alert('Se actualizó correctamente la contraseña');
+      this.initFormPassword();
+    }, (err) => {
+      console.log(err);
+      this.spinnerStatus = false;
+      // if (err['status'] = 422) {
+      //   this.initFormPassword();
+      //   alert('Contraseña actualizada satisfactoriamente');
+      // }
     });
   }
 
@@ -91,7 +111,7 @@ export class VetEditComponent implements OnInit {
       'phone': [this.vet.phone, [Validators.required, Validators.minLength(9)]],
       'address': [this.vet.address, [Validators.required, Validators.minLength(3)]],
       'email': [this.vet.email, [Validators.required, Validators.email, Validators.minLength(3)]],
-      'password': [this.vet.password, [Validators.required, Validators.minLength(3)]],
+      // 'password': [this.vet.password, [Validators.required, Validators.minLength(3)]],
       'cmvp': [this.vet.cmvp, [Validators.required]]
     });
   }
@@ -104,8 +124,14 @@ export class VetEditComponent implements OnInit {
       'phone': ['', [Validators.required, Validators.minLength(9)]],
       'address': ['', [Validators.required, Validators.minLength(3)]],
       'email': ['', [Validators.required, Validators.email, Validators.minLength(3)]],
-      'password': ['', [Validators.required, Validators.minLength(3)]],
+      // 'password': ['', [Validators.required, Validators.minLength(3)]],
       'cmvp': ['', [Validators.required]]
+    });
+  }
+
+  initFormPassword() {
+    this.vetPasswordForm = this.formBuilder.group({
+      'password': ['', [Validators.required, Validators.minLength(3)]]
     });
   }
 

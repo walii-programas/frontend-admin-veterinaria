@@ -10,13 +10,17 @@ export interface PetHospitalizedService {
 export interface HospitalizedService {
   id: string;
   date: Date;
-  initial_date;
-  final_date;
+  // initial_date;
+  // final_date;
   diagnosis: string;
   description: string;
-  symptoms: string;
   treatment: string;
   cost: string;
+  weight: number;
+  temperature: number
+  symptoms: string;
+  observations: string;
   fk_id_pet: string;
   fk_id_veterinary: string;
+  updated_at: Date;
 }

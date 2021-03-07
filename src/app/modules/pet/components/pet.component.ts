@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from "@angular/router";
-import { Observable } from "rxjs";
+import { DatePipe } from "@angular/common";
 import { PetService } from "../service/pet.service";
 import { ClientService } from "../../client/service/client.service";
 import { Pet } from '../interfaces/pet.interface';
@@ -18,7 +18,7 @@ export class PetComponent implements OnInit {
   // variables
   idClient: string = '';
   petFormReg!: FormGroup;
-  client: Client[] = [];
+  client: Client;
   pets: Pet[] = [];
 
   constructor(
@@ -27,7 +27,8 @@ export class PetComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private petService: PetService,
-    private clientService: ClientService
+    private clientService: ClientService,
+    private datePipe: DatePipe
   ) {
     // get id_client on load
     this.idClient = this.activatedRoute.snapshot.paramMap.get('id') || '';
@@ -101,6 +102,9 @@ export class PetComponent implements OnInit {
     this.spinnerStatus = true;
     this.petService.petsClientGetListAll(this.idClient).subscribe((res) => {
       // console.log(res);
+      res['data'].forEach(pet => {
+        pet.birthdate = this.datePipe.transform(pet.birthdate, "EEEE, dd 'de' MMMM 'del' y")
+      });
       this.pets = res['data'];
       localStorage.setItem('pets/' + this.idClient, JSON.stringify(this.pets));
       this.spinnerStatus = false;

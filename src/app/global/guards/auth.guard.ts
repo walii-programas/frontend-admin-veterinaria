@@ -32,6 +32,8 @@ export class AuthGuard implements CanActivate {
       // return false;
       return true;
     } else {
+      // localStorage.clear();
+      // alert('La sesión expiró, por favor inicie sesión de nuevo');
       this.router.navigateByUrl('/login');
       return false;
     }

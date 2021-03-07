@@ -19,6 +19,7 @@ export class VetService {
 
   // metodos
   public vetGetListAll() {
+    this.gAuthServ.validateAndRefreshToken();
     return this.http.get(
       this.urlApiAdmin + '/admin/vets',
       {headers: this.gAuthServ.getHeaders()}
@@ -26,6 +27,7 @@ export class VetService {
   }
 
   public getVet(idVet: string) {
+    this.gAuthServ.validateAndRefreshToken();
     return this.http.get(
       this.urlApiAdmin + '/admin/vets/' + idVet,
       {headers: this.gAuthServ.getHeaders()}
@@ -33,6 +35,7 @@ export class VetService {
   }
 
   public getVetRoles(idVet: string) {
+    this.gAuthServ.validateAndRefreshToken();
     return this.http.get(
       this.urlApiAdmin + '/admin/vets/' + idVet + '/roles',
       {headers: this.gAuthServ.getHeaders()}
@@ -40,6 +43,7 @@ export class VetService {
   }
 
   public vetRegister(vet: Vet) {
+    this.gAuthServ.validateAndRefreshToken();
     return this.http.post(
       this.urlApiAdmin + '/admin/vets',
       this.gAuthServ.getFormUrlEncoded(vet),
@@ -47,6 +51,7 @@ export class VetService {
   }
 
   public vetUpdate(vet: Vet, idVet: string) {
+    this.gAuthServ.validateAndRefreshToken();
     return this.http.put(
       this.urlApiAdmin + '/admin/vets/' + idVet,
       this.gAuthServ.getFormUrlEncoded(vet),
@@ -54,7 +59,19 @@ export class VetService {
     );
   }
 
+  public vetPasswordUpdate(password: string, idVet: string) {
+    this.gAuthServ.validateAndRefreshToken();
+    return this.http.put(
+      this.urlApiAdmin + '/admin/vets/' + idVet + '/password',
+      this.gAuthServ.getFormUrlEncoded({
+        password: password
+      }),
+      {headers: this.gAuthServ.getHeaders()}
+    );
+  }
+
   public asignRole(idVet: string, idRole: string) {
+    this.gAuthServ.validateAndRefreshToken();
     return this.http.post(
       this.urlApiAdmin + '/admin/vets/' + idVet + '/roles/asign',
       this.gAuthServ.getFormUrlEncoded({
@@ -65,6 +82,7 @@ export class VetService {
   }
 
   public denyRole(idVet: string, idRole: string) {
+    this.gAuthServ.validateAndRefreshToken();
     return this.http.post(
       this.urlApiAdmin + '/admin/vets/' + idVet + '/roles/deny',
       this.gAuthServ.getFormUrlEncoded({

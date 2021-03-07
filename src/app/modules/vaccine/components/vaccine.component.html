@@ -12,6 +12,8 @@
 
   </div>
 
+  <hr>
+
   <div class="container" *ngIf="switchRegVaccine">
     <h3>Registrar Nueva Vacuna</h3>
     <form class="vaccine__formReg" [formGroup]="vaccineFormReg" (ngSubmit)="vaccineRegister(vaccineFormReg.value)">

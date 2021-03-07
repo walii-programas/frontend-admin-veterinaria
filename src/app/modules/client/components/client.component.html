@@ -69,14 +69,13 @@
         <th scope="col">DNI</th>
         <th scope="col">Número de Celular</th>
         <th scope="col">Cantidad de Mascotas</th>
-        <th scope="col">Acción</th>
+        <th scope="col">Acciones</th>
       </tr>
       </thead>
       <tbody>
       <tr *ngFor="let client of clients$ | async; index as i">
         <th scope="row">{{ i + 1 }}</th>
         <td>
-          <!-- <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" class="mr-2" style="width: 20px"> -->
           <ngb-highlight [result]="client.firstname + ' ' + client.lastname" [term]="filter.value"></ngb-highlight>
         </td>
         <td>
@@ -89,7 +88,14 @@
           <ngb-highlight [result]="client.address" [term]="filter.value"></ngb-highlight>
         </td>
         <td>
-          <button class="btn btn-primary" routerLink="/home/mascotas/{{client.id}}">Ver Mascotas</button>
+          <div class="row">
+            <div class="col">
+              <button class="btn btn-primary" routerLink="/home/mascotas/{{client.id}}">Ver Mascotas</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-primary" routerLink="/home/editar-cliente/{{client.id}}">Editar Datos</button>
+            </div>
+          </div>
         </td>
       </tr>
       </tbody>

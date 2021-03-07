@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from "@angular/router";
-import { Location } from "@angular/common";
+import { Location, DatePipe } from "@angular/common";
 
 import { PetService } from "../../service/pet.service";
 import { VaccineService } from "../../../vaccine/service/vaccine.service";
@@ -25,7 +25,8 @@ export class PetVaccinationCardComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private petService: PetService,
-    private vaccineService: VaccineService
+    private vaccineService: VaccineService,
+    private datePipe: DatePipe
   ) {
     // get id_pet on load
     this.idPet = this.activatedRoute.snapshot.paramMap.get('id') || '';
@@ -67,7 +68,13 @@ export class PetVaccinationCardComponent implements OnInit {
   vaccinationCardGetListAll() {
     this.spinnerStatus = true;
     this.petService.getPetVaccinationCardsByPet(this.idPet).subscribe((res) => {
-      // console.log(res);
+      console.log(res);
+      res['data'].forEach(pvc => {
+        pvc.petVaccinationCard.date = this.datePipe.transform(pvc.petVaccinationCard.date, "EEEE, dd 'de' MMMM 'del' y, h:mm a");
+        pvc.vaccines.forEach(vaccine => {
+          vaccine.pivot.date = this.datePipe.transform(vaccine.pivot.date, "EEEE, dd 'de' MMMM 'del' y")
+        });
+      });
       this.vaccinationCards = res['data'];
       this.spinnerStatus = false;
     }, (err) => {
@@ -268,7 +275,7 @@ export class PetVaccinationCardComponent implements OnInit {
 
   // get client from local storage
   getLocalStorageClient() {
-    return JSON.parse(localStorage.getItem('clientSelected'))[0];
+    return JSON.parse(localStorage.getItem('clientSelected'));
   }
 
   // get vaccines

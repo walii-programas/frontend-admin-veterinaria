@@ -19,6 +19,7 @@ export class ClientService {
 
   // metodos
   public clientGetListAll() {
+    this.gAuthServ.validateAndRefreshToken();
     return this.http.get(
       this.urlApiAdmin + '/admin/clients',
       {headers: this.gAuthServ.getHeaders()}
@@ -26,6 +27,7 @@ export class ClientService {
   }
 
   public getCLient(idCLient: string) {
+    this.gAuthServ.validateAndRefreshToken();
     return this.http.get(
       this.urlApiAdmin + '/admin/clients/' + idCLient,
       {headers: this.gAuthServ.getHeaders()}
@@ -33,10 +35,31 @@ export class ClientService {
   }
 
   public clientRegister(client: Client) {
+    this.gAuthServ.validateAndRefreshToken();
     return this.http.post(
       this.urlApiAdmin + '/admin/clients', 
       this.gAuthServ.getFormUrlEncoded(client),
       {headers: this.gAuthServ.getHeaders()});
+  }
+
+  public clientUpdate(client: Client, idClient: string) {
+    this.gAuthServ.validateAndRefreshToken();
+    return this.http.put(
+      this.urlApiAdmin + '/admin/clients/' + idClient,
+      this.gAuthServ.getFormUrlEncoded(client),
+      {headers: this.gAuthServ.getHeaders()}
+    );
+  }
+
+  public clientPasswordUpdate(password: string, idClient: string) {
+    this.gAuthServ.validateAndRefreshToken();
+    return this.http.put(
+      this.urlApiAdmin + '/admin/clients/' + idClient + '/password',
+      this.gAuthServ.getFormUrlEncoded({
+        password: password
+      }),
+      {headers: this.gAuthServ.getHeaders()}
+    );
   }
 
 }

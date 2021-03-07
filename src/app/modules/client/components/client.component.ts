@@ -77,8 +77,8 @@ export class ClientComponent implements OnInit {
       'dni': ['',[Validators.required, Validators.minLength(8)]],
       'phone': ['',[Validators.required, Validators.minLength(9)]],
       'address': ['',[Validators.required, Validators.minLength(3)]],
-      'email': ['',[Validators.required, Validators.email, Validators.minLength(3)]],
-      'password': ['',[Validators.required, Validators.minLength(3)]]
+      'email': ['',[Validators.email, Validators.minLength(3)]],
+      'password': ['',[Validators.minLength(3)]]
     });
   }
 
