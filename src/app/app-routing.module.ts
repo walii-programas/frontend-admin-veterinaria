@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-// components
+/* components */
 import { LoginComponent } from "./modules/login/components/login.component";
 import { HomeComponent } from "./modules/home/components/home.component";
   // home's children
@@ -14,13 +14,16 @@ import { HomeComponent } from "./modules/home/components/home.component";
   import { VetComponent } from './modules/vet/components/vet.component';
   import { VaccineComponent } from './modules/vaccine/components/vaccine.component';
 
-// guards
+  import { PetSimpleServiceComponent } from './modules/pet/components/pet-simple-service/pet-simple-service.component';
+  import { PetHospitalizedServiceComponent } from './modules/pet/components/pet-hospitalized-service/pet-hospitalized-service.component';
+  import { VetEditComponent } from './modules/vet/components/vet-edit/vet-edit.component';
+  import { RoleComponent } from "./modules/role/components/role.component";
+
+/* guards */
 import { AuthGuard } from './global/guards/auth.guard';
-import { PetSimpleServiceComponent } from './modules/pet/components/pet-simple-service/pet-simple-service.component';
-import { PetHospitalizedServiceComponent } from './modules/pet/components/pet-hospitalized-service/pet-hospitalized-service.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: 'login', pathMatch: 'full'},
+  {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
   {path: 'home', component: HomeComponent, children: [
     {path: 'clientes', component: ClientComponent},
@@ -30,7 +33,9 @@ const routes: Routes = [
     {path: 'servicios-simples/:id', component: PetSimpleServiceComponent},
     {path: 'servicios-hospitalizacion/:id', component: PetHospitalizedServiceComponent},
     {path:'vacunas', component: VaccineComponent},
-    {path: 'veterinarios', component: VetComponent}
+    {path: 'veterinarios', component: VetComponent},
+    {path: 'editar-veterinario/:id', component: VetEditComponent},
+    {path: 'roles', component: RoleComponent}
   ], canActivate: [AuthGuard]}
 ];
 

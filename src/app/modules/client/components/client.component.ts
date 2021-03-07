@@ -6,6 +6,8 @@ import { Router } from "@angular/router";
 import { ClientService } from "../service/client.service";
 import { Client } from '../interfaces/client.interface';
 
+import { GlobalAuthService } from "../../../global/services/globalAuth.service";
+
 @Component({
   selector: 'app-client',
   templateUrl: './client.component.html',
@@ -19,7 +21,8 @@ export class ClientComponent implements OnInit {
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private clientService: ClientService
+    private clientService: ClientService,
+    private gAuthServ: GlobalAuthService
   ) { }
 
   ngOnInit(): void {
@@ -92,6 +95,7 @@ export class ClientComponent implements OnInit {
         map(text => this.search(text))
       );
       this.spinnerStatus = false;
+      // this.gAuthServ.refreshToken();
     }, (err) => {
       console.log(err);
       this.spinnerStatus = false;

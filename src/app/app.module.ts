@@ -18,6 +18,8 @@ import { PetVaccinationCardComponent } from './modules/pet/components/pet-vaccin
 import { VaccineComponent } from './modules/vaccine/components/vaccine.component';
 import { PetSimpleServiceComponent } from './modules/pet/components/pet-simple-service/pet-simple-service.component';
 import { PetHospitalizedServiceComponent } from './modules/pet/components/pet-hospitalized-service/pet-hospitalized-service.component';
+import { VetEditComponent } from './modules/vet/components/vet-edit/vet-edit.component';
+import { RoleComponent } from './modules/role/components/role.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { PetHospitalizedServiceComponent } from './modules/pet/components/pet-ho
     PetVaccinationCardComponent,
     VaccineComponent,
     PetSimpleServiceComponent,
-    PetHospitalizedServiceComponent
+    PetHospitalizedServiceComponent,
+    VetEditComponent,
+    RoleComponent
   ],
   imports: [
     BrowserModule,

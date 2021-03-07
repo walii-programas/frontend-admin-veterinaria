@@ -281,4 +281,13 @@ export class PetVaccinationCardComponent implements OnInit {
     });
   }
 
+  statePvcVaccine(state: string): boolean {
+    if (state == 'No vacunado') {
+      return true;
+    } else if (state == 'Vacunado') {
+      return false;
+    }
+    return false;
+  }
+
 }

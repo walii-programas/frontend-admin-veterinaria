@@ -20,14 +20,17 @@ export class AuthGuard implements CanActivate {
   
   canActivate() {
     if (this.gAuthService.getLoginStatus()) {
-      if (localStorage.getItem('loginVet') == 'true') {
-        return true;
-      } else if (localStorage.getItem('loginClient') == 'true') {
-        this.router.navigateByUrl('/login');
-        alert('Usuario no autorizado');
-        return false;
-      }
-      return false;
+      // if (localStorage.getItem('loginVet') == 'true') {
+      //   this.router.navigateByUrl('/home');
+      //   return true;
+      // } else if (localStorage.getItem('loginClient') == 'true') {
+      //   localStorage.clear();
+      //   this.router.navigateByUrl('/login');
+      //   alert('Usuario no autorizado');
+      //   return false;
+      // }
+      // return false;
+      return true;
     } else {
       this.router.navigateByUrl('/login');
       return false;

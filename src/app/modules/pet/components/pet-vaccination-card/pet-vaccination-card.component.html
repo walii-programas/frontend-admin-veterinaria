@@ -86,31 +86,38 @@
       <!-- sub menu -->
       <div class="row">
         <div class="col">
+          <hr>
           <h3>Agregar Vacuna</h3>
         </div>
       </div>
 
       <!-- details of pet vaccination card selected -->
       <div class="row">
-        <h3>Carta de Vacunación Seleccionada: <span> {{ vaccinationCardSelected. description }} </span></h3>
+        <div class="col">
+          <h3>- Carta de Vacunación Seleccionada: <span> {{ vaccinationCardSelected. description }} </span></h3>
+        </div>
       </div>
       
       <!-- form add vaccines to pet vaccination card -->
       <div class="row">
         <div class="col">
           <form class="pet-vaccination-card__formReg" [formGroup]="vaccineFormAdd" (ngSubmit)="addVaccine(vaccineFormAdd.value)">
-            <div class="form-row">
-              <div class="col">
-                <select formControlName="fk_id_vaccine" class="form-control">
-                  <!-- <option value="1">Vacuna 1</option>
-                  <option value="2">Vacuna 2</option> -->
-                  <option *ngFor="let vaccine of vaccines; index as i" value={{vaccine.id}}> {{vaccine.name}} </option>
-                </select>
+            <div class="row">
+              <div class="col form-row">
+                <div class="col">
+                  <label class="form-label">Seleccione una vacuna de la lista:</label>
+                  <select formControlName="fk_id_vaccine" class="form-control">
+                    <!-- <option value="1">Vacuna 1</option>
+                    <option value="2">Vacuna 2</option> -->
+                    <option *ngFor="let vaccine of vaccines; index as i" value={{vaccine.id}}> {{vaccine.name}} </option>
+                  </select>
+                </div>
               </div>
-            </div>
-            <div class="form-row">
-              <div class="col">
-                <input formControlName="date" class="form-control" type="date">
+              <div class="col form-row">
+                <div class="col">
+                  <label class="form-label">Ingrese la fecha de vacunación:</label>
+                  <input formControlName="date" class="form-control" type="date">
+                </div>
               </div>
             </div>
             <button type="submit" class="btn btn-primary" [disabled]="vaccineFormAdd.invalid">Agregar Vacuna</button>
@@ -121,17 +128,19 @@
       <!-- list vaccines added to pet vaccination card -->
       <div class="row pet-vaccination-card__list-vaccines-added">
 
-        <div class="row">
+        <div class="col">
 
-          <div *ngFor="let pvcd of petVaccinationCardsDetails; index as i" class="col">
-            <div class="card">
-              <div class="card-header">
-                {{ pvcd.pivot.date }}
-              </div>
-              <div class="card-body">
-                <h5 class="card-title">Nombre de vacuna: {{ pvcd.name }}</h5>
-                <p class="card-text">Estado de la vacuna: {{ pvcd.pivot.state }} </p>
-                <button class="btn btn-primary" (click)="removeVaccine(pvcd.pivot.vaccine_id, pvcd.pivot.date)">Quitar Vacuna</button>
+          <div class="row">
+            <div *ngFor="let pvcd of petVaccinationCardsDetails; index as i" class="col-3">
+              <div class="card">
+                <div class="card-header">
+                  <h4><b>Fecha de vacuna: </b> <span>{{ pvcd.pivot.date }}</span></h4>
+                </div>
+                <div class="card-body">
+                  <p class="card-title"><b>Nombre de vacuna: </b> <span>{{ pvcd.name }}</span></p>
+                  <p class="card-text"><b>Estado de la vacuna:</b> {{ pvcd.pivot.state }}</p>
+                  <button class="btn btn-secondary" (click)="removeVaccine(pvcd.pivot.vaccine_id, pvcd.pivot.date)" *ngIf="statePvcVaccine(pvcd.pivot.state)">Quitar Vacuna</button>
+                </div>
               </div>
             </div>
           </div>
@@ -161,13 +170,33 @@
 
     <div class="pet__container row" [hidden]="!switchListvaccinationCard">
 
-      <ngb-accordion [closeOthers]="true" activeIds="static-0">
+      <ngb-accordion [closeOthers]="true" activeIds="static-0" class="accordion">
 
         <ngb-panel id="static-{{i}}" *ngFor="let pvc of vaccinationCards; index as i">
 
           <ng-template ngbPanelTitle>
-            <h3>Descripcion:<span><b> {{ pvc.petVaccinationCard.description }} </b></span><button class="btn btn-primary" (click)="selectPetVaccinationCard(pvc.petVaccinationCard)">Agregar o Quitar Vacunas</button></h3>
-            
+            <div class="container">
+              <div class="row">
+                <h3>
+                  Descripcion:
+                  <span>
+                    <b> {{ pvc.petVaccinationCard.description }} </b>
+                  </span>
+                </h3>
+              </div>
+              <div class="row">
+                <h3>
+                  
+                  Fecha de Creación: 
+                  <span>
+                    <b> {{ pvc.petVaccinationCard.date }} </b>
+                  </span>
+                </h3>
+              </div>
+              <div class="row">
+                <button class="btn btn-primary" (click)="selectPetVaccinationCard(pvc.petVaccinationCard)">Agregar o Quitar Vacunas</button>
+              </div>
+            </div>
           </ng-template>
 
           <!-- <ngb-panel id="static-1">
@@ -184,10 +213,10 @@
               <div class="col-3" *ngFor="let vaccine of pvc.vaccines; index as i">
                 <div class="card">
                   <div class="card-header">
-                    <b>Fecha de vacuna:</b> {{ vaccine.pivot.date }}
+                    <h4><b>Fecha de vacuna: </b> <span>{{ vaccine.pivot.date }}</span></h4>
                   </div>
                   <div class="card-body">
-                    <h5 class="card-title"><b>Nombre de vacuna:</b> {{ vaccine.name }}</h5>
+                    <p class="card-title"><b>Nombre de vacuna: </b> <span>{{ vaccine.name }}</span></p>
                     <p class="card-text"><b>Estado de la vacuna:</b> {{ vaccine.pivot.state }}</p>
                     <p *ngIf="vaccine.pivot.fk_id_vet"><b>Veterinario que vacunó a la mascota:</b> {{ '' || vaccine.pivot.vet.firstname }} </p>
                     <p *ngIf="vaccine.pivot.fk_id_vet"><b>Código del veterinario:</b> {{'' || vaccine.pivot.vet.cmvp}} </p>

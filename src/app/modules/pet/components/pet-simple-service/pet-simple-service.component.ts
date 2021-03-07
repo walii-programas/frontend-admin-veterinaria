@@ -77,7 +77,7 @@ export class PetSimpleServiceComponent implements OnInit {
     dataSimpleService.fk_id_pet = this.idPet;
     this.petService.postPetSimpleService(dataSimpleService).subscribe((res) => {
       console.log(res);
-      this.switchToPetSimpleServiceFormReg();
+      this.switchToPetSimpleServicesList();
       this.getSimpleServicesByPet();
     }, (err) => {
       console.log(err);

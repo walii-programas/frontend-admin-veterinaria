@@ -7,6 +7,7 @@ import { PetVaccinationCard } from "../interfaces/petVaccinationCard.interface";
 import { Vaccine } from "../../vaccine/interfaces/vaccine.interface";
 import { PetVaccinationCardDetails } from "../interfaces/petVaccinationCardDetails.interface";
 import { PetSimpleService, SimpleService } from "../interfaces/petSimpleService.interface";
+import { HospitalizedService } from "../interfaces/petHospitalizedService.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -140,6 +141,22 @@ export class PetService {
     return this.http.post(
       this.urlApiAdmin + '/admin/simple-services',
       this.gAuthServ.getFormUrlEncoded(simpleService),
+      {headers: this.gAuthServ.getHeaders()}
+    );
+  }
+
+  /* PET HOSPITALIZED SERVICES */
+  public getHospitalizedServicesByPet(idPet: string) {
+    return this.http.get(
+      this.urlApiAdmin + '/admin/pets/' + idPet + '/hospitalized-services',
+      {headers: this.gAuthServ.getHeaders()}
+    );
+  }
+
+  public postPetHospitalizedService(hospitalizedService: HospitalizedService) {
+    return this.http.post(
+      this.gAuthServ.urlApiAdmin + '/admin/hospitalized-services',
+      this.gAuthServ.getFormUrlEncoded(hospitalizedService),
       {headers: this.gAuthServ.getHeaders()}
     );
   }

@@ -92,7 +92,7 @@
           <ngb-highlight [result]="vet.cmvp" [term]="filter.value"></ngb-highlight>
         </td>
         <td>
-          <button class="btn btn-primary">Editar datos</button>
+          <button class="btn btn-primary" (click)="goToEditVet(vet.id)">Editar datos</button>
         </td>
       </tr>
       </tbody>

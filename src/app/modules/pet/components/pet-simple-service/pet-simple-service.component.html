@@ -35,7 +35,7 @@
 
     <div class="container" *ngIf="switchSimpleServiceFormReg">
       <h3>Registrar Nuevo Servicio Simple</h3>
-      <form class="pet-simple-service__formReg" [formGroup]="simpleServiceFormReg" (ngSubmit)="clinicalHistoryRegister(clinicalHistoryFormReg.value)">
+      <form class="pet-simple-service__formReg" [formGroup]="simpleServiceFormReg" (ngSubmit)="registerSimpleService(simpleServiceFormReg.value)">
         <div class="form-row">
           <div class="col">
             <input formControlName="name" type="text" class="form-control" placeholder="Nombre del Servicio">
@@ -64,7 +64,7 @@
 
     <div class="pet__container row" [hidden]="!switchSimpleServicesList">
       <div class="col">
-        <ngb-accordion [closeOthers]="true" activeIds="static-0">
+        <ngb-accordion [closeOthers]="true" activeIds="static-0" class="accordion">
 
           <ngb-panel id="static-{{i}}" *ngFor="let pss of simpleServices; index as i">
 
@@ -74,9 +74,11 @@
 
             <ng-template ngbPanelContent>
 
-              <h3>Datos del Servicio Simple</h3>
+              <div class="row">
 
               <div class="col-7">
+
+                <h3>Datos del Servicio Simple</h3>
 
                 <div class="form-group row">
                   <label class="col col-form-label">Fecha de Creación:</label>
@@ -102,6 +104,29 @@
                   <label class="col col-form-label">Costo:</label>
                   <label class="col col-form-label">S/ {{ pss.simpleService.cost }}</label>
                 </div>
+
+              </div>
+
+              <div class="col-5">
+
+                <h3>Datos del Veterinario</h3>
+
+                <div class="row">
+                  <div class="col">
+                    <div class="form-group row">
+                      <label class="col col-form-label">Veterinario encargado:</label>
+                      <label class="col col-form-label">S/ {{ pss.vet.firstname }} {{ pss.vet.lastname }}</label>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col col-form-label">Código de veterinario:</label>
+                      <label class="col col-form-label">S/ {{ pss.vet.cmvp }}</label>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="row"></div>
+
+              </div>
 
               </div>
 

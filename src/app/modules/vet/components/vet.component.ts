@@ -91,6 +91,10 @@ export class VetComponent implements OnInit {
     });
   }
 
+  goToEditVet(idVet: string) {
+    this.router.navigateByUrl('/home/editar-veterinario/' + idVet);
+  }
+
   /* API methods */
 
   // get vet list

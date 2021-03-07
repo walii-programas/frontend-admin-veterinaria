@@ -12,6 +12,8 @@ export class GlobalAuthService {
   // public variables
   public urlApiAdmin = 'http://localhost:8000/api';
 
+  public currentLoginStatus = 50
+
   // public metods
   public getFormUrlEncoded(toConvert:any) {
     const formBody = [];
@@ -30,13 +32,14 @@ export class GlobalAuthService {
     });
   }
 
-  public getLoginStatus():boolean{
-    if(localStorage.getItem('token') !== null){
-        let current = new Date(localStorage.getItem('expires_in'));
+  public getLoginStatus(): boolean {
+    if(localStorage.getItem('token') !== null) {
+        let current = new Date(Date.now() + (parseInt(localStorage.getItem('expires_in')) - 3600000));
+        // let current = new Date(localStorage.getItem('expires_in'));
         let actual = new Date();
-        if (actual < current) {
+        if (actual > current) {
             return true;
-        } else{
+        } else {
             return false;
         }
     }
@@ -49,6 +52,19 @@ export class GlobalAuthService {
       {},
       {headers: this.getHeaders()}
     );
+  }
+
+  public refreshToken() {
+    return this.http.post(
+      this.urlApiAdmin + '/auth/refresh',
+      {},
+      {headers: this.getHeaders()}
+    ).subscribe((res) => {
+      console.log(res);
+      localStorage.setItem('token', res['token']);
+    }, (err) => {
+      console.log(err);
+    });
   }
 
 }

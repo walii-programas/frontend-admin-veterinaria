@@ -13,7 +13,7 @@ export interface SimpleService {
   name: string,
   description: string,
   symptoms: string,
-  treatments: string,
+  treatment: string,
   cost: number,
   fk_id_pet: string,
   fk_id_vet: string

@@ -25,11 +25,53 @@ export class VetService {
     );
   }
 
+  public getVet(idVet: string) {
+    return this.http.get(
+      this.urlApiAdmin + '/admin/vets/' + idVet,
+      {headers: this.gAuthServ.getHeaders()}
+    );
+  }
+
+  public getVetRoles(idVet: string) {
+    return this.http.get(
+      this.urlApiAdmin + '/admin/vets/' + idVet + '/roles',
+      {headers: this.gAuthServ.getHeaders()}
+    );
+  }
+
   public vetRegister(vet: Vet) {
     return this.http.post(
       this.urlApiAdmin + '/admin/vets',
       this.gAuthServ.getFormUrlEncoded(vet),
       {headers: this.gAuthServ.getHeaders()});
+  }
+
+  public vetUpdate(vet: Vet, idVet: string) {
+    return this.http.put(
+      this.urlApiAdmin + '/admin/vets/' + idVet,
+      this.gAuthServ.getFormUrlEncoded(vet),
+      {headers: this.gAuthServ.getHeaders()}
+    );
+  }
+
+  public asignRole(idVet: string, idRole: string) {
+    return this.http.post(
+      this.urlApiAdmin + '/admin/vets/' + idVet + '/roles/asign',
+      this.gAuthServ.getFormUrlEncoded({
+        id_role: idRole
+      }),
+      {headers: this.gAuthServ.getHeaders()}
+    );
+  }
+
+  public denyRole(idVet: string, idRole: string) {
+    return this.http.post(
+      this.urlApiAdmin + '/admin/vets/' + idVet + '/roles/deny',
+      this.gAuthServ.getFormUrlEncoded({
+        id_role: idRole
+      }),
+      {headers: this.gAuthServ.getHeaders()}
+    );
   }
 
 }
