@@ -118,13 +118,13 @@ export class PetHospitalizedServiceComponent implements OnInit {
   initFormRegHospitalizedService() {
     this.hospitalizedServiceFormReg = this.formBuilder.group({
       'diagnosis': ['',[Validators.required]],
-      'description': ['',[Validators.required]],
+      'description': ['',[]],
       'treatment': ['', [Validators.required]],
       'cost': ['', [Validators.required]],
       'weight': ['', [Validators.required]],
       'temperature': ['', [Validators.required]],
       'symptoms': ['', [Validators.required]],
-      'observations': ['', [Validators.required]]
+      'observations': ['', []]
       // 'initial_date': ['', [Validators.required]],
       // 'final_date': ['', []],
     });
@@ -142,6 +142,10 @@ export class PetHospitalizedServiceComponent implements OnInit {
         this.pet = pet;
       }
     });
+  }
+
+  goToEditHospitalizedService(idHospitalizedService: string) {
+    this.router.navigateByUrl('/home/editar-servicio-internado/' + idHospitalizedService);
   }
 
 }

@@ -19,7 +19,7 @@ export class RoleService {
 
   /* methods */
   public getRoles() {
-    // this.gAuthServ.validateAndRefreshToken();
+    this.gAuthServ.validateAndRefreshToken();
     return this.http.get(
       this.urlApiAdmin + '/admin/roles',
       {headers: this.gAuthServ.getHeaders()}
@@ -27,7 +27,7 @@ export class RoleService {
   }
 
   public postRole(role: Role) {
-    // this.gAuthServ.validateAndRefreshToken();
+    this.gAuthServ.validateAndRefreshToken();
     return this.http.post(
       this.urlApiAdmin + '/admin/roles',
       this.gAuthServ.getFormUrlEncoded(role),
@@ -36,7 +36,7 @@ export class RoleService {
   }
 
   public putRole(role: Role, idRole: string) {
-    // this.gAuthServ.validateAndRefreshToken();
+    this.gAuthServ.validateAndRefreshToken();
     return this.http.put(
       this.urlApiAdmin + '/admin/roles/' + idRole,
       this.gAuthServ.getFormUrlEncoded(role),

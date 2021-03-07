@@ -15,6 +15,7 @@ export class VaccineComponent implements OnInit {
 
   // variables
   vaccineFormReg!: FormGroup;
+  vaccinesAndUsedQuantity: any;
 
   constructor(
     private router: Router,
@@ -25,9 +26,10 @@ export class VaccineComponent implements OnInit {
   ngOnInit(): void {
     // init form vaccine register
     this.initFormVaccineRegister();
-
     // get vaccines list
     this.vaccineGetAll();
+    // get vaccines and used quantity
+    this.getVaccinesAndUsedQuantity();
   }
 
   // filter vaccines
@@ -96,6 +98,16 @@ export class VaccineComponent implements OnInit {
       this.switchPageList();
       this.vaccineGetAll();
       this.initFormVaccineRegister();
+    }, (err) => {
+      console.log(err);
+    });
+  }
+
+  // get vaccines name and used quantity
+  getVaccinesAndUsedQuantity() {
+    this.vaccineService.getVaccinesAndCountUsedVaccines().subscribe((res) => {
+      console.log(res);
+      this.vaccinesAndUsedQuantity = res['data'];
     }, (err) => {
       console.log(err);
     });

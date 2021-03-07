@@ -30,7 +30,7 @@
 }
 
 .nav-item {
-  width: 100%;
+  width: 110%;
   cursor: pointer;
   transition: all 400ms ease;
 }
@@ -57,14 +57,8 @@
   border-radius: 0.7rem;
   background: var(--secondary-color);
   color: var(--text-secondary);
-  .fa-primary {
-    color: var(--primary-color);
-  }
-  .fa-secondary {
-    color: var(--primary-color);
-  }
-  svg {
-    width: 2.5rem;
+  img {
+    width: 3rem;
   }
 }
 
@@ -73,25 +67,8 @@
   margin-left: 1rem;
 }
 
-.nav-link svg {
-  width: 1.7rem;
+.nav-link img {
+  width: 2rem;
   min-width: 1.7rem;
   margin: 0 1.5rem;
-}
-
-.fa-primary {
-  // color: #ff7eee;
-  // color: var(--primary-color);
-  color: var(--bg-primary);
-}
-
-.fa-secondary {
-  // color: #df49a6;
-  // color: var(--secondary-color);
-  color: var(--bg-primary);
-}
-
-.fa-primary,
-.fa-secondary {
-  transition: 400ms;
 }

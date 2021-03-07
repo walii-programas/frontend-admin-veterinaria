@@ -24,6 +24,10 @@ import { VetEditComponent } from './modules/vet/components/vet-edit/vet-edit.com
 import { RoleComponent } from './modules/role/components/role.component';
 import { ClientEditComponent } from './modules/client/components/client-edit/client-edit.component';
 import { PetHospitalizedServiceEditComponent } from './modules/pet/components/pet-hospitalized-service/pet-hospitalized-service-edit/pet-hospitalized-service-edit.component';
+import { BlogComponent } from './modules/blog/components/blog.component';
+import { ServiceComponent } from './modules/service/components/service.component';
+import { ForgotPasswordComponent } from './modules/forgot-password/components/forgot-password.component';
+import { ForgotPasswordUpdateComponent } from './modules/forgot-password/components/forgot-password-update/forgot-password-update.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +46,11 @@ import { PetHospitalizedServiceEditComponent } from './modules/pet/components/pe
     VetEditComponent,
     RoleComponent,
     ClientEditComponent,
-    PetHospitalizedServiceEditComponent
+    PetHospitalizedServiceEditComponent,
+    BlogComponent,
+    ServiceComponent,
+    ForgotPasswordComponent,
+    ForgotPasswordUpdateComponent
   ],
   imports: [
     BrowserModule,

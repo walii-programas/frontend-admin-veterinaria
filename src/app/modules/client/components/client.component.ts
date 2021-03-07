@@ -104,13 +104,16 @@ export class ClientComponent implements OnInit {
 
   // register new client
   clientRegister(dataclient: Client) {
+    this.spinnerStatus = true;
     this.clientService.clientRegister(dataclient).subscribe((res) => {
       // console.log(res);
+      this.spinnerStatus = true;
       this.switchPageList();
       this.clientGetListAll();
       this.initFormClientRegister();
     }, (err) => {
       console.log(err);
+      this.spinnerStatus = false;
     });
   }
 

@@ -19,6 +19,7 @@
     <form class="vaccine__formReg" [formGroup]="vaccineFormReg" (ngSubmit)="vaccineRegister(vaccineFormReg.value)">
       <div class="form-row">
         <div class="col">
+          <label>Nombre de la vacuna</label>
           <input formControlName="name" type="text" class="form-control" placeholder="Nombre de la vacuna">
         </div>
       </div>
@@ -41,26 +42,55 @@
       </div>
     </form>
     
-    <table class="table table-borderless table-hover">
-      <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Nombre de Vacuna</th>
-        <th scope="col">Acción</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let vaccine of vaccines$ | async; index as i">
-        <th scope="row">{{ i + 1 }}</th>
-        <td>
-          <ngb-highlight [result]="vaccine.name" [term]="filter.value"></ngb-highlight>
-        </td>
-        <td>
-          <button class="btn btn-primary">Editar datos</button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+    <div class="row">
+
+      <div class="col">
+        <table class="table table-borderless table-hover">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre de Vacuna</th>
+            <th scope="col">Acción</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let vaccine of vaccines$ | async; index as i">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>
+              <ngb-highlight [result]="vaccine.name" [term]="filter.value"></ngb-highlight>
+            </td>
+            <td>
+              <button class="btn btn-primary">Editar datos</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="col">
+        <table class="table table-borderless table-hover">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre de Vacuna</th>
+            <th scope="col">Cantidad Utilizadas</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let vaccine of vaccinesAndUsedQuantity; index as i">
+            <th scope="row">-</th>
+            <td>
+              <ngb-highlight [result]="vaccine.name"></ngb-highlight>
+            </td>
+            <td>
+              <b><ngb-highlight [result]="vaccine.quantity"></ngb-highlight></b> <span> unidades utilizadas</span>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
 
   </div>
 

@@ -19,31 +19,39 @@
     <form class="vet__formReg" [formGroup]="vetFormReg" (ngSubmit)="vetRegister(vetFormReg.value)">
       <div class="form-row">
         <div class="col">
+          <label>Nombres</label>
           <input formControlName="firstname" type="text" class="form-control" placeholder="Nombres">
         </div>
         <div class="col">
+          <label>Apellidos</label>
           <input formControlName="lastname" type="text" class="form-control" placeholder="Apellidos">
         </div>
         <div class="col">
+          <label>DNI</label>
           <input formControlName="dni" type="number" class="form-control" placeholder="DNI">
         </div>
       </div>
       <div class="form-row">
         <div class="col">
+          <label>Número de celular</label>
           <input formControlName="phone" type="number" class="form-control" placeholder="Número de celular">
         </div>
         <div class="col-8">
+          <label>Dirección de hogar</label>
           <input formControlName="address" type="text" class="form-control" placeholder="Dirección hogar">
         </div>
       </div>
       <div class="form-row">
         <div class="col">
+          <label>Correo electrónico</label>
           <input formControlName="email" type="text" class="form-control" placeholder="Correo Electrónico">
         </div>
         <div class="col">
+          <label>Contraseña</label>
           <input formControlName="password" type="password" class="form-control" placeholder="Contraseña">
         </div>
         <div class="col">
+          <label>CMVP</label>
           <input formControlName="cmvp" type="cmvp" class="form-control" placeholder="CMVP">
         </div>
       </div>

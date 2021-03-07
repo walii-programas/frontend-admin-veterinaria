@@ -117,13 +117,13 @@ export class PetSimpleServiceComponent implements OnInit {
   initFormRegSimpleService() {
     this.simpleServiceFormReg = this.formBuilder.group({
       'name': ['',[Validators.required]],
-      'description': ['',[Validators.required]],
-      'treatment': ['', [Validators.required]],
+      'description': ['',[]],
+      'treatment': ['', []],
       'cost': ['', [Validators.required]],
       'weight': ['', [Validators.required]],
-      'temperature': ['', [Validators.required]],
-      'symptoms': ['', [Validators.required]],
-      'observations': ['', [Validators.required]]
+      'temperature': ['', []],
+      'symptoms': ['', []],
+      'observations': ['', []]
     });
   }
 

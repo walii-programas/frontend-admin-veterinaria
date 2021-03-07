@@ -161,4 +161,19 @@ export class PetService {
     );
   }
 
+  public getHospitalizedService(idHospitalizedService: string) {
+    return this.http.get(
+      this.urlApiAdmin + '/admin/hospitalized-services/' + idHospitalizedService,
+      {headers: this.gAuthServ.getHeaders()}
+    );
+  }
+
+  public putHospitalizedService(hospitalizedService: HospitalizedService, idHospitalizedService: string) {
+    return this.http.put(
+      this.urlApiAdmin + '/admin/hospitalized-services/' + idHospitalizedService,
+      this.gAuthServ.getFormUrlEncoded(hospitalizedService),
+      {headers: this.gAuthServ.getHeaders()}
+    );
+  }
+
 }

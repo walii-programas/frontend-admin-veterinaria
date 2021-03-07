@@ -44,23 +44,29 @@
       <form class="pet__formReg" [formGroup]="petFormReg" (ngSubmit)="petRegister(petFormReg.value)">
         <div class="form-row">
           <div class="col">
+            <label>Nombre</label>
             <input formControlName="name" type="text" class="form-control" placeholder="Nombres">
           </div>
           <div class="col">
+            <label>Especie</label>
             <input formControlName="species" type="text" class="form-control" placeholder="Especie">
           </div>
           <div class="col">
+            <label>Raza</label>
             <input formControlName="breed" type="text" class="form-control" placeholder="Raza">
           </div>
         </div>
         <div class="form-row">
           <div class="col">
+            <label>Color</label>
             <input formControlName="color" type="text" class="form-control" placeholder="Color">
           </div>
           <div class="col">
+            <label>Fecha de nacimiento</label>
             <input formControlName="birthdate" type="date" class="form-control" placeholder="Fecha de Nacimiento">
           </div>
           <div class="col">
+            <label>Sexo</label>
             <select formControlName="sex" class="form-control">
               <option value="Macho">Macho</option>
               <option value="Hembra">Hembra</option>

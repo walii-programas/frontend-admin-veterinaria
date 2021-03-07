@@ -38,10 +38,10 @@ export class PetComponent implements OnInit {
   ngOnInit(): void {
     // init form vet register
     this.initFormPetRegister();
-    // get client's pets
-    this.petClientGetListAll();
     // get client
     this.getClient();
+    // get client's pets
+    this.petClientGetListAll();
   }
   
   /* UI methods */

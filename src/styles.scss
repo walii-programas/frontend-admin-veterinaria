@@ -30,15 +30,15 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: bold;
 }
 
-label {
-  font-style: italic;
-}
+// label {
+//   font-style: italic;
+// }
 
 h3 span, h4 span, h5 span {
   color: var(--secondary-color);
 }
 
-input, textarea, select, small, .card, ngb-datepicker {
+input, textarea, select, small, .card {
   margin-bottom: 1rem;
   border-radius: 0.7rem!important;
 }

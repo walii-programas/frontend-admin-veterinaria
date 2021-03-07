@@ -90,13 +90,16 @@ export class RoleComponent implements OnInit {
 
   // register new vet
   roleRegister(dataRole: Role) {
+    this.spinnerStatus = true;
     this.roleService.postRole(dataRole).subscribe((res) => {
       // console.log(res);
+      this.spinnerStatus = false;
       this.switchPageList();
       this.roleGetAll();
       this.initFormRoleRegister();
     }, (err) => {
       console.log(err);
+      this.spinnerStatus = false;
     });
   }
 

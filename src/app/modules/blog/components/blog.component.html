@@ -1,0 +1,76 @@
+<div class="blog">
+
+  <div class="container">
+
+    <div class="row">
+      <h2>Blog</h2>
+    </div>
+    <div class="row">
+      <button class="btn btn-primary" (click)="switchPageList()">Lista de Blogs</button>
+      <button class="btn btn-primary" (click)="switchPageReg()">Registrar nuevo Blog</button>
+    </div>
+
+  </div>
+
+  <div class="container" *ngIf="switchRegBlog">
+    <h3>Registrar Nuevo Blog</h3>
+    <form class="blog__form-reg" [formGroup]="blogFormReg" (ngSubmit)="registerBlog(blogFormReg.value)">
+      <div class="form-row">
+        <div class="col">
+          <label>Titulo del Blog</label>
+          <input formControlName="title" type="text" class="form-control" placeholder="Titulo del blog">
+        </div>
+        <div class="col">
+          <label>Imagen del Blog</label>
+          <textarea formControlName="image" cols="30" rows="1" class="form-control" placeholder="Copie aquí el enlace del link de la imagen"></textarea>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col">
+          <label>Descripción del Blog</label>
+          <textarea formControlName="description" cols="30" rows="4" class="form-control" placeholder="Descripción del blog"></textarea>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="blogFormReg.invalid">Registrar Nuevo Blog</button>
+    </form>
+    <button class="btn btn-secondary" (click)="switchPageList()">Cancelar</button>
+  </div>
+
+  <div class="container blog__spinner">
+    <div class="spinner-border text-primary" role="status" *ngIf="spinnerStatus">
+      <span class="sr-only">Cargando...</span>
+    </div>
+  </div>
+  
+  <div class="container" [hidden]="!switchListBlog">
+
+    <form class="blog__form-search">
+      <div class="form-group form-inline">
+          Buscar Blog: <input class="form-control ml-2" type="text" [formControl]="filter"/>
+      </div>
+    </form>
+    
+    <table class="table table-borderless table-hover">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Título de Blog</th>
+        <th scope="col">Acción</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let blog of blogs$ | async; index as i">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>
+          <ngb-highlight [result]="blog.title" [term]="filter.value"></ngb-highlight>
+        </td>
+        <td>
+          <button class="btn btn-primary">Editar datos</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+</div>

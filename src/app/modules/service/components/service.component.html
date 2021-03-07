@@ -1,0 +1,76 @@
+<div class="service">
+
+  <div class="container">
+
+    <div class="row">
+      <h2>Servicios</h2>
+    </div>
+    <div class="row">
+      <button class="btn btn-primary" (click)="switchPageList()">Lista de Servicios</button>
+      <button class="btn btn-primary" (click)="switchPageReg()">Registrar nuevo Servicio</button>
+    </div>
+
+  </div>
+
+  <div class="container" *ngIf="switchRegService">
+    <h3>Registrar Nuevo service</h3>
+    <form class="service__form-reg" [formGroup]="serviceFormReg" (ngSubmit)="registerService(serviceFormReg.value)">
+      <div class="form-row">
+        <div class="col">
+          <label>Titulo del Servicio</label>
+          <input formControlName="title" type="text" class="form-control" placeholder="Titulo del Servicio">
+        </div>
+        <div class="col">
+          <label>Imagen del Servicio</label>
+          <textarea formControlName="image" cols="30" rows="1" class="form-control" placeholder="Copie aquí el enlace del link de la imagen"></textarea>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col">
+          <label>Descripción del Servicio</label>
+          <textarea formControlName="description" cols="30" rows="4" class="form-control" placeholder="Descripción del Servicio"></textarea>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="serviceFormReg.invalid">Registrar Nuevo Servicio</button>
+    </form>
+    <button class="btn btn-secondary" (click)="switchPageList()">Cancelar</button>
+  </div>
+
+  <div class="container service__spinner">
+    <div class="spinner-border text-primary" role="status" *ngIf="spinnerStatus">
+      <span class="sr-only">Cargando...</span>
+    </div>
+  </div>
+  
+  <div class="container" [hidden]="!switchListService">
+
+    <form class="service__form-search">
+      <div class="form-group form-inline">
+          Buscar Servicio: <input class="form-control ml-2" type="text" [formControl]="filter"/>
+      </div>
+    </form>
+    
+    <table class="table table-borderless table-hover">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Título de Servicio</th>
+        <th scope="col">Acción</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let service of services$ | async; index as i">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>
+          <ngb-highlight [result]="service.title" [term]="filter.value"></ngb-highlight>
+        </td>
+        <td>
+          <button class="btn btn-primary">Editar datos</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+</div>

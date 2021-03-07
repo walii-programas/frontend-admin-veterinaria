@@ -60,7 +60,7 @@ export class PetVaccinationCardComponent implements OnInit {
   initFormRegVaccinationCard() {
     this.vaccinationCardFormReg = this.formBuilder.group({
       'description': ['',[Validators.required]],
-      'cost': ['',[Validators.required]]
+      // 'cost': ['',[Validators.required]]
     });
   }
 
@@ -72,7 +72,7 @@ export class PetVaccinationCardComponent implements OnInit {
       res['data'].forEach(pvc => {
         pvc.petVaccinationCard.date = this.datePipe.transform(pvc.petVaccinationCard.date, "EEEE, dd 'de' MMMM 'del' y, h:mm a");
         pvc.vaccines.forEach(vaccine => {
-          vaccine.pivot.date = this.datePipe.transform(vaccine.pivot.date, "EEEE, dd 'de' MMMM 'del' y")
+          vaccine.pivot.dateForPipe = this.datePipe.transform(vaccine.pivot.date, "EEEE, dd 'de' MMMM 'del' y")
         });
       });
       this.vaccinationCards = res['data'];
@@ -126,15 +126,22 @@ export class PetVaccinationCardComponent implements OnInit {
 
   // get vaccination cards details
   getVaccinationCardsDetailsByPVC() {
+    this.spinnerAddVaccinesStatus = true;
     this.petService.getVaccinationCardsDetailsByPvc(this.vaccinationCardSelected).subscribe((res) => {
-      // console.log(res);
+      console.log(res);
+      res['data'].forEach(vcd => {
+        vcd.pivot.dateForPipe = this.datePipe.transform(vcd.pivot.date, "EEEE, dd 'de' MMMM 'del' y");
+      });
       this.petVaccinationCardsDetails = res['data'];
+      this.spinnerAddVaccinesStatus = false;
     }, (err) => {
       console.log(err);
+      this.spinnerAddVaccinesStatus = false;
     });
   }
 
   addVaccine(dataVaccine: PetVaccinationCardDetails) {
+    this.spinnerAddVaccinesStatus = true;
     this.petService.postVaccineToPetVaccinationCard(
       dataVaccine,
       this.vaccinationCardSelected
@@ -142,8 +149,10 @@ export class PetVaccinationCardComponent implements OnInit {
       // console.log(res);
       this.getVaccinationCardsDetailsByPVC();
       this.initFormVaccinesAdd();
+      // this.spinnerAddVaccinesStatus = false;
     }, (err) => {
       console.log(err);
+      this.spinnerAddVaccinesStatus = false;
     });
   }
 
@@ -221,6 +230,7 @@ export class PetVaccinationCardComponent implements OnInit {
 
   spinnerStatus = false;
   updatingVaccineState = false;
+  spinnerAddVaccinesStatus = false;
 
   // UI methods--
 

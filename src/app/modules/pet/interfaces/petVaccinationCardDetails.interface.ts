@@ -10,6 +10,7 @@ export interface PetVaccinationCardDetails {
   pivot: {
     vaccine_id,
     date,
+    dateForPipe,
     state,
     fk_id_vet
     vet: {
