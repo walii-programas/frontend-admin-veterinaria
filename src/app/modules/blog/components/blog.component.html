@@ -55,6 +55,7 @@
       <tr>
         <th scope="col">#</th>
         <th scope="col">Título de Blog</th>
+        <th scope="col">Descripción de Blog</th>
         <th scope="col">Acción</th>
       </tr>
       </thead>
@@ -65,7 +66,10 @@
           <ngb-highlight [result]="blog.title" [term]="filter.value"></ngb-highlight>
         </td>
         <td>
-          <button class="btn btn-primary">Editar datos</button>
+          <ngb-highlight [result]="blog.description" [term]="filter.value"></ngb-highlight>
+        </td>
+        <td>
+          <button class="btn btn-primary" routerLink="/home/editar-blog/{{blog.id}}">Editar blog</button>
         </td>
       </tr>
       </tbody>

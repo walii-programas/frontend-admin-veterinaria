@@ -20,14 +20,16 @@ import { HomeComponent } from "./modules/home/components/home.component";
   import { RoleComponent } from "./modules/role/components/role.component";
   import { ClientEditComponent } from './modules/client/components/client-edit/client-edit.component';
   import { PetHospitalizedServiceEditComponent } from './modules/pet/components/pet-hospitalized-service/pet-hospitalized-service-edit/pet-hospitalized-service-edit.component';
+  import { RoleGuard } from './global/guards/role.guard';
+  import { BlogComponent } from './modules/blog/components/blog.component';
+  import { ServiceComponent } from './modules/service/components/service.component';
+  import { ForgotPasswordComponent } from './modules/forgot-password/components/forgot-password.component';
+  import { ForgotPasswordUpdateComponent } from './modules/forgot-password/components/forgot-password-update/forgot-password-update.component';
+  import { BlogEditComponent } from './modules/blog/components/blog-edit/blog-edit.component';
 
 /* guards */
 import { AuthGuard } from './global/guards/auth.guard';
-import { RoleGuard } from './global/guards/role.guard';
-import { BlogComponent } from './modules/blog/components/blog.component';
-import { ServiceComponent } from './modules/service/components/service.component';
-import { ForgotPasswordComponent } from './modules/forgot-password/components/forgot-password.component';
-import { ForgotPasswordUpdateComponent } from './modules/forgot-password/components/forgot-password-update/forgot-password-update.component';
+import { ServiceEditComponent } from './modules/service/components/service-edit/service-edit.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -46,7 +48,9 @@ const routes: Routes = [
     {path: 'editar-servicio-internado/:id', component: PetHospitalizedServiceEditComponent},
     {path: 'roles', component: RoleComponent, canActivate: [RoleGuard]},
     {path: 'blog', component: BlogComponent, canActivate: [RoleGuard]},
-    {path: 'servicios', component: ServiceComponent, canActivate: [RoleGuard]}
+    {path: 'servicios', component: ServiceComponent, canActivate: [RoleGuard]},
+    {path: 'editar-blog/:id', component: BlogEditComponent},
+    {path: 'editar-servicio/:id', component: ServiceEditComponent}
   ], canActivate: [AuthGuard]},
   {path: 'olvide-contrasena', component: ForgotPasswordComponent},
   {path: 'restablecer-contrasena/:verification_token', component: ForgotPasswordUpdateComponent}

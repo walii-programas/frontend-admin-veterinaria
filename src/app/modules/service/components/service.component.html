@@ -55,6 +55,7 @@
       <tr>
         <th scope="col">#</th>
         <th scope="col">Título de Servicio</th>
+        <th scope="col">Descripción de Servicio</th>
         <th scope="col">Acción</th>
       </tr>
       </thead>
@@ -65,7 +66,10 @@
           <ngb-highlight [result]="service.title" [term]="filter.value"></ngb-highlight>
         </td>
         <td>
-          <button class="btn btn-primary">Editar datos</button>
+          <ngb-highlight [result]="service.description" [term]="filter.value"></ngb-highlight>
+        </td>
+        <td>
+          <button class="btn btn-primary" routerLink="/home/editar-servicio/{{service.id}}">Editar datos</button>
         </td>
       </tr>
       </tbody>

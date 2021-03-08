@@ -28,6 +28,8 @@ import { BlogComponent } from './modules/blog/components/blog.component';
 import { ServiceComponent } from './modules/service/components/service.component';
 import { ForgotPasswordComponent } from './modules/forgot-password/components/forgot-password.component';
 import { ForgotPasswordUpdateComponent } from './modules/forgot-password/components/forgot-password-update/forgot-password-update.component';
+import { BlogEditComponent } from './modules/blog/components/blog-edit/blog-edit.component';
+import { ServiceEditComponent } from './modules/service/components/service-edit/service-edit.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,9 @@ import { ForgotPasswordUpdateComponent } from './modules/forgot-password/compone
     BlogComponent,
     ServiceComponent,
     ForgotPasswordComponent,
-    ForgotPasswordUpdateComponent
+    ForgotPasswordUpdateComponent,
+    BlogEditComponent,
+    ServiceEditComponent
   ],
   imports: [
     BrowserModule,

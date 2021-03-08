@@ -115,7 +115,23 @@
           <ngb-panel id="static-{{i}}" *ngFor="let pss of simpleServices; index as i">
 
             <ng-template ngbPanelTitle>
-              <h3>Nombre del Servicio:<span><b> {{ pss.simpleService.name }} </b></span></h3>
+              <!-- <h3>Nombre del Servicio:<span><b> {{ pss.simpleService.name }} </b></span></h3> -->
+              <div class="container">
+                <div class="row">
+                  <h3 class="col">
+                    Fecha del Servicio:
+                    <span>
+                      <b> {{ pss.simpleService.date }} </b>
+                    </span>
+                  </h3>
+                  <h3 class="col">
+                    Nombre del Servicio:
+                    <span>
+                      <b> {{ pss.simpleService.name }} </b>
+                    </span>
+                  </h3>
+                </div>
+              </div>
             </ng-template>
 
             <ng-template ngbPanelContent>

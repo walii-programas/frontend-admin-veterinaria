@@ -70,7 +70,7 @@ export class PetVaccinationCardComponent implements OnInit {
     this.petService.getPetVaccinationCardsByPet(this.idPet).subscribe((res) => {
       console.log(res);
       res['data'].forEach(pvc => {
-        pvc.petVaccinationCard.date = this.datePipe.transform(pvc.petVaccinationCard.date, "EEEE, dd 'de' MMMM 'del' y, h:mm a");
+        pvc.petVaccinationCard.date = this.datePipe.transform(pvc.petVaccinationCard.date, "EEEE, dd 'de' MMMM 'del' y");
         pvc.vaccines.forEach(vaccine => {
           vaccine.pivot.dateForPipe = this.datePipe.transform(vaccine.pivot.date, "EEEE, dd 'de' MMMM 'del' y")
         });

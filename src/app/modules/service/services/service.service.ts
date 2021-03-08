@@ -26,6 +26,14 @@ export class ServiceService {
     );
   }
 
+  public getService(idService: string) {
+    this.gAuthServ.validateAndRefreshToken();
+    return this.http.get(
+      this.urlApiAdmin + `/admin/services/${idService}`,
+      {headers: this.gAuthServ.getHeaders()}
+    );
+  }
+
   public postService(service: Service) {
     this.gAuthServ.validateAndRefreshToken();
     return this.http.post(

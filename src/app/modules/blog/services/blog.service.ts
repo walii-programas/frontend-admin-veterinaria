@@ -26,6 +26,14 @@ export class BlogService {
     );
   }
 
+  public getBlog(idBlog: string) {
+    this.gAuthServ.validateAndRefreshToken();
+    return this.http.get(
+      this.urlApiAdmin + `/admin/blogs/${idBlog}`,
+      {headers: this.gAuthServ.getHeaders()}
+    );
+  }
+
   public postBlog(blog: Blog) {
     this.gAuthServ.validateAndRefreshToken();
     return this.http.post(
@@ -35,10 +43,10 @@ export class BlogService {
     );
   }
 
-  public putBlog(blog: Blog, idRole: string) {
+  public putBlog(blog: Blog, idBlog: string) {
     this.gAuthServ.validateAndRefreshToken();
     return this.http.put(
-      this.urlApiAdmin + `/admin/blogs/${idRole}`,
+      this.urlApiAdmin + `/admin/blogs/${idBlog}`,
       this.gAuthServ.getFormUrlEncoded(blog),
       {headers: this.gAuthServ.getHeaders()}
     );
